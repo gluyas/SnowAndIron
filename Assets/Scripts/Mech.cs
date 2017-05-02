@@ -7,7 +7,7 @@ public class Mech : MonoBehaviour
 {
 	// Editor variables
 	public float MoveSpeed = 5f;
-	public float TurnSpeed = 2f;
+	public float TurnSpeed = 180f;
 
 	public Vector3 PositionOffset = Vector3.zero;
 	public Vector3 RotationOffsetEuler = Vector3.zero;	// to expose to unity editor
