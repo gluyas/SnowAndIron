@@ -4,7 +4,7 @@
     <unityVersion>5.6.0f3</unityVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <unityProcessId>8904</unityProcessId>
+    <unityProcessId>9120</unityProcessId>
   </PropertyGroup>
   <PropertyGroup>
     <LangVersion>4</LangVersion>
@@ -56,6 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CameraFollowScript.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\LevelGenerator.cs" />
     <Compile Include="Assets\Scripts\Model\Combat.cs" />
@@ -69,7 +70,6 @@
     <Compile Include="Assets\Scripts\ModelExtensions.cs" />
     <Compile Include="Assets\Scripts\MoveAnimation.cs" />
     <Compile Include="Assets\Scripts\PlayerMech.cs" />
-    <Compile Include="Assets\Scripts\TestBouncyCubeScript.cs" />
     <Compile Include="Assets\Scripts\UnitAvatar.cs" />
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
