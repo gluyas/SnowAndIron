@@ -1,0 +1,85 @@
+﻿using System;
+
+namespace Model
+{
+	public sealed class Unit
+	{
+		public delegate Move AiMoveMethod(Unit unit, World world);
+
+		// Accessors
+		public TileVector Position { get; private set; }
+		public CardinalDirection Facing { get; private set; }
+
+		// Unit stats and behaviour
+		public readonly int Owner = 0; // TODO: update with better semantics
+
+		public readonly int MaxHealth;
+		public int Health { get; private set; }
+
+		public readonly int MaxEnergy;
+		public int Energy { get; private set; }
+
+		// AI Hooks
+		public readonly AiMoveMethod GetMove;
+		// we might need more, for example, combat modifiers
+
+		// Private fields
+		private readonly UnitAvatar _avatar;	// Unity representation
+
+		public Unit (UnitAvatar avatar, TileVector position, CardinalDirection facing)
+		{
+			_avatar = avatar;
+			Position = position;
+			Facing = facing;
+
+			MaxHealth = _avatar.MaxHealth;
+			Health = Health;
+
+			MaxEnergy = _avatar.MaxEnergy;
+			Energy = MaxEnergy;
+
+			GetMove = RandomMoveAi; // TODO: remove this line: get unit design from the UnitAvatar
+		}
+
+		public void Reset()
+		{
+			// TODO: refine
+			Energy = MaxEnergy;
+		}
+
+		public bool CanMove()
+		{
+			// TODO: this will probably need refinement!
+			return Energy > 0;
+		}
+
+		public void ApplyMove(Move move)
+		{
+			if (move.Unit != this) throw new ArgumentException("Applied move does not reference this unit");
+
+			_avatar.ApplyMove(move); // animate avatar (do this first, as it needs to read fields here)
+
+			Facing = Facing.Turn(move.Direction);
+			Position = move.Destination;
+			Energy -= move.EnergyCost;
+		}
+
+		public void ApplyCombat(Combat combat)
+		{
+			Unit other;		// determine which unit is not this one
+			if (combat.Unit1 == this) 		other = combat.Unit2;
+			else if (combat.Unit2 == this) 	other = combat.Unit1;
+			else throw new ArgumentException("Applied combat does not reference this unit");
+
+			var startingHealth = this.Health;	// trade energy for health with the other unit
+			this.Health -= other.Energy;		// implementing combat in two halves like this guarantees symmetry
+			other.Energy -= startingHealth;
+		}
+
+		public Move RandomMoveAi(Unit unit, World world) // debug code
+		{
+			int rn = new Random(unit.Position.GetHashCode()).Next(6);
+			return Move.Step(this, (RelativeDirection) rn);
+		}
+	}
+}

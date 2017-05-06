@@ -23,6 +23,19 @@ namespace Model
 		    E = e;
 	    }
 
+	    public ICollection<TileVector> Adjacent(bool includeSelf = false)
+	    {
+		    var adjacent = new List<TileVector>();
+		    if (includeSelf) adjacent.Add(this);
+
+		    for (int i = 0; i < 6; i++)
+		    {
+			    CardinalDirection dir = CardinalDirection.North.ArcClockwise(i);
+			    adjacent.Add(this + dir);
+		    }
+		    return adjacent;
+	    }
+
 	    /// <summary>
 	    /// Get distance
 	    /// </summary>
@@ -35,10 +48,7 @@ namespace Model
 		    return Math.Max(diff.W, diff.E);
 	    }
 
-	    public static TileVector operator +(TileVector a, CardinalDirection d)
-	    {
-		    return a + d.GetTileVector();
-	    }
+	    // OPERATORS ON TILEVECTORS
 
 	    public static TileVector operator +(TileVector a, TileVector b)
 	    {
@@ -64,6 +74,20 @@ namespace Model
 	    {
 		    return !a.Equals(b);
 	    }
+
+	    // OPERATORS ON DIRECTION ENUMS
+
+	    public static TileVector operator +(TileVector a, CardinalDirection d)
+	    {
+		    return a + d.GetTileVector();
+	    }
+
+	    public static TileVector operator -(TileVector a, CardinalDirection d)
+	    {
+		    return a - d.GetTileVector();
+	    }
+
+	    // OVERRRIDE METHODS
 
 	    public override string ToString()
 	    {

@@ -8,7 +8,7 @@ public class MoveAnimation
 	private const float IdleAnimationBleed = 0.05f;		// when to stop the walk animation before reaching destination
 
 	// unity components
-	private Mech _unit;
+	private UnitAvatar _unit;
 
 	// transition tracking fields
 	//private Vector3 _originPos;
@@ -16,11 +16,19 @@ public class MoveAnimation
 
 	private Quaternion _targetRot;
 
-	public MoveAnimation(Mech unit, TileVector from, TileVector to)
+	[System.Obsolete("Use the destination and direction constructor instead")]
+	public MoveAnimation(UnitAvatar unit, TileVector from, TileVector to)
 	{
 		_targetRot = (to - from).GetBearingRotation();
 		_targetPos = to.ToVector3();
 		_unit = unit;
+	}
+
+	public MoveAnimation(UnitAvatar unit, TileVector destination, CardinalDirection direction)
+	{
+		_unit = unit;
+		_targetPos = destination.ToVector3();
+		_targetRot = direction.GetBearingRotation();
 	}
 
 	public bool ApplyAnimation(float time)
