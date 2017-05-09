@@ -6,9 +6,15 @@ namespace Model
 	{
 		public delegate Move AiMoveMethod(Unit unit, World world);
 
+		public const int UnitBadMovesTimeout = 5;
+
 		// Accessors
 		public TileVector Position { get; private set; }
 		public CardinalDirection Facing { get; private set; }
+
+		public MovementPlan LastMove { get; private set; }
+
+		public AiMoveMethod GetMove; // TODO: replace with new MovementPlan method instead once complete
 
 		// Unit stats and behaviour
 		public readonly int Owner = 0; // TODO: update with better semantics
@@ -20,15 +26,17 @@ namespace Model
 		public int Energy { get; private set; }
 
 		// AI Hooks
-		public readonly AiMoveMethod GetMove;
+		private readonly AiMoveMethod _moveMethod;
 		// we might need more, for example, combat modifiers
 
 		// Private fields
 		private readonly UnitAvatar _avatar;	// Unity representation
+		private int _timeout = UnitBadMovesTimeout;
 
 		public Unit (UnitAvatar avatar, TileVector position, CardinalDirection facing)
 		{
 			_avatar = avatar;
+
 			Position = position;
 			Facing = facing;
 
@@ -38,19 +46,32 @@ namespace Model
 			MaxEnergy = _avatar.MaxEnergy;
 			Energy = MaxEnergy;
 
-			GetMove = RandomMoveAi; // TODO: remove this line: get unit design from the UnitAvatar
-		}
+			//TODO: temporary code until we can bundle AiMoveMethod with UnitAvatar
+			GetMove = RandomMoveMethod;
 
-		public void Reset()
-		{
-			// TODO: refine
-			Energy = MaxEnergy;
 		}
 
 		public bool CanMove()
 		{
 			// TODO: this will probably need refinement!
-			return Energy > 0;
+			return _timeout >= 0 && Energy > 0;
+		}
+
+		public void Reset()
+		{
+			// TODO: refine
+			ResetTimeout();
+			Energy = MaxEnergy;
+		}
+
+		public void ResetTimeout()
+		{
+			_timeout = UnitBadMovesTimeout;
+		}
+
+		public bool Timeout()
+		{
+			return --_timeout == 0;
 		}
 
 		public void ApplyMove(Move move)
@@ -76,10 +97,9 @@ namespace Model
 			other.Energy -= startingHealth;
 		}
 
-		public Move RandomMoveAi(Unit unit, World world) // debug code
+		public static Move RandomMoveMethod(Unit unit, World world)
 		{
-			int rn = new Random(unit.Position.GetHashCode()).Next(6);
-			return Move.Step(this, (RelativeDirection) rn);
+			return Move.Step(unit, (RelativeDirection) new Random(unit.Position.GetHashCode()).Next(6));
 		}
 	}
 }

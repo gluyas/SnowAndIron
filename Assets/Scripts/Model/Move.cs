@@ -1,5 +1,4 @@
-﻿// Author
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Model
@@ -38,11 +37,13 @@ namespace Model
 
 		public void Apply()
 		{
+			Unit.ResetTimeout();
 			Unit.ApplyMove(this);
 		}
 
-		public void ApplyWithoutStep()
+		public void Reject()
 		{
+			if (Unit.Timeout()) Utils.Printf("Timed out unit {0}", Unit);
 			var newMove = Turn(Unit, Direction);
 			newMove.Apply();
 		}
@@ -56,7 +57,7 @@ namespace Model
 		public static Move Step(Unit unit, RelativeDirection direction)
 		{
 			TileVector destination = unit.Position + unit.Facing.Turn(direction);
-			return new Move(unit, direction, destination, 1);
+			return new Move(unit, direction, destination, 2);
 		}
 
 		/// <summary>
@@ -76,7 +77,7 @@ namespace Model
 		/// <returns></returns>
 		public static Move Turn(Unit unit, RelativeDirection direction)
 		{
-			return new Move(unit, direction, unit.Position, 0);
+			return new Move(unit, direction, unit.Position, 1);
 		}
 
 		/// <summary>

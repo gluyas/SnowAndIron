@@ -12,16 +12,23 @@ public class GameController : MonoBehaviour
 	private void Start()
 	{
 		_worldController = new WorldController();
-		foreach (var pos in new TileVector(25, 25).Adjacent())
+		for (var i = 0; i < UnitCount; i++)
 		{
 			GameObject ua = Instantiate(TestUnit);
 			_worldController.AddUnit(new Unit(ua.GetComponent<UnitAvatar>(),
-				pos, CardinalDirection.North));
+				new TileVector(25-UnitCount/2+i, 25), CardinalDirection.North));
 		}
 	}
 
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.A)) _worldController.DoTurn();
+	}
+
+	public bool MakeMech(GameObject unitAvatar, TileVector pos, CardinalDirection dir)
+	{
+		UnitAvatar avatar = unitAvatar.GetComponent<UnitAvatar>();
+		Unit unit = new Unit(avatar, pos, dir);
+		return _worldController.AddUnit(unit);
 	}
 }

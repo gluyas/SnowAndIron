@@ -21,38 +21,66 @@ namespace Model
 		/// Units passed to this method should not be aliased by the caller.
 		/// </summary>
 		/// <param name="newUnit"></param>
-		/// <returns></returns>
+		/// <returns>true if the unit was successfully inserted</returns>
 		public bool AddUnit(Unit newUnit)
 		{
+			/**
 			foreach (var unit in _units)
 			{
 				if (newUnit == unit || newUnit.Position == unit.Position) return false;
 			}
-			_units.Add(newUnit);
+
 			_world[newUnit.Position].Occupant = newUnit;
+			*/
+			_units.Add(newUnit);
 			return true;
 		}
+
+		private static int _debugTurnNumber = 0;
 
 		/// <summary>
 		/// Simulate the game for a single turn.
 		/// </summary>
 		public void DoTurn()
 		{
+			int debugTurnNumber = _debugTurnNumber++;
+			Utils.Printf("Turn {0} starting", debugTurnNumber);
+
 			var activeUnits = new List<Unit>(_units);
+
+			int debugFrameIters = 0;
 
 			do // main loop: iterate through each simulation frame
 			{
+				if (debugFrameIters++ >= 50)
+				{
+					//Utils.Printf("Turn {0} aborting on frame {1}", debugTurnNumber, debugFrameIters);
+					break;
+				}
+				//Utils.Printf("Turn {0} entering frame {1}", debugTurnNumber, debugFrameIters++);
 				var moveDestinations = new Dictionary<TileVector, List<MoveResolver>>(); // where units want to move to
 				var moveOrigins 	 = new Dictionary<TileVector, MoveResolver>();		 // where units are moving from
 
 				// TODO: also check units which are in combat at the start of the turn
+
+				bool debugAtiveUnits = false;
 
 				// STEP 1: AI PROCESSING
 				foreach (var unit in _units)	// collect all units' moves into the Dictionary
 				{
 					// get unit's planned move - if it can't, then assign a default move. NB: this operation must hit
 					// every unit in the game, as step 2 MUST use the Dictionary, and not the map.
-					var move = unit.CanMove() ? unit.GetMove(unit, _world) : Move.Halt(unit);
+					Move move;
+					if (unit.CanMove())
+					{
+						move = unit.GetMove(unit, _world);
+						debugAtiveUnits = true;
+					}
+					else
+					{
+						move = Move.Halt(unit);
+					}
+					//var move = unit.CanMove() ? unit.GetMove(unit, _world) : Move.Halt(unit);
 
 					List<MoveResolver> movesToTarget;
 					if (moveDestinations.ContainsKey(move.Destination))
@@ -68,6 +96,12 @@ namespace Model
 					var resolver = new MoveResolver(move);			// wrap so we can easily solve complex dependencies
 					moveOrigins.Add(move.Unit.Position, resolver);	// store for access later
 					movesToTarget.Add(resolver);
+				}
+
+				if (!debugAtiveUnits)
+				{
+					Utils.Printf("Turn {0} breaking mid-loop", debugTurnNumber);
+					break;
 				}
 
 				// STEP 2: MOVE CONFLICT RESOLUTION
@@ -115,6 +149,7 @@ namespace Model
 					// TODO: the World is not actually updated with unit positions, figure out a good way to implement
 				}
 
+				/*
 				// STEP 3: COMBAT DETERMINATION
 				var pendingCombat = new HashSet<Combat>();	// stops doubling up of the same combat
 
@@ -141,12 +176,15 @@ namespace Model
 						combat.Apply();
 					}
 				}
+				*/
 			} while (activeUnits.Count > 0);
 
 			foreach (var unit in _units)
 			{
 				unit.Reset();
 			}
+
+			Utils.Printf("Turn {0} exiting after {1} frames", debugTurnNumber, debugFrameIters);
 		}
 
 		private class MoveResolver
@@ -174,7 +212,7 @@ namespace Model
 				}
 				else
 				{
-					Move.ApplyWithoutStep();
+					Move.Reject();
 				}
 
 				foreach (var dep in _dependents)
@@ -194,6 +232,7 @@ namespace Model
 				}
 				else if (parent._root == this)			// cyclic, unresolved dependencies: resolve true
 				{
+					Utils.Printf("Resolved cycle starting at move: {0}", Move);
 					Resolve(true);
 				}
 				else 							// wait until a decision is made

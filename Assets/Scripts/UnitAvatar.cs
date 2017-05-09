@@ -58,6 +58,7 @@ public class UnitAvatar : MonoBehaviour
 
 	public void ApplyMove(Move move)
 	{
+		if (move.IsHalt()) return;
 		_moveQueue.Enqueue(new MoveAnimation(this, move.Destination, move.Unit.Facing.Turn(move.Direction)));
 	}
 }
