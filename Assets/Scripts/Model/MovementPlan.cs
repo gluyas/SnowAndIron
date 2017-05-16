@@ -8,6 +8,7 @@
 
 		private int _timeout;
 
+		public abstract Move GetNextMove();
 
 		// SUBCLASS HOOKS
 

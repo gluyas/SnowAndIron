@@ -8,7 +8,8 @@ public class UnitAvatar : MonoBehaviour
 	// Behavioural and stat variables
 	public int MaxHealth;
 	public int MaxEnergy;
-	public Unit.AiMoveMethod MoveMethod;
+
+	public UnitAi Ai;
 
 	// Comsmetic variables
 	public float MoveSpeed = 5f;
