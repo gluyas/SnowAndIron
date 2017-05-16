@@ -47,6 +47,12 @@ namespace Model
 			Utils.Printf("Turn {0} starting", debugTurnNumber);
 
 			var activeUnits = new List<Unit>(_units);
+			var turnPlans = new List<TurnPlan>();
+
+			foreach (var unit in activeUnits)
+			{
+				turnPlans.Add(unit.GetMovementPlan(_world));
+			}
 
 			int debugFrameIters = 0;
 
@@ -63,24 +69,18 @@ namespace Model
 
 				// TODO: also check units which are in combat at the start of the turn
 
-				bool debugAtiveUnits = false;
-
 				// STEP 1: AI PROCESSING
-				foreach (var unit in _units)	// collect all units' moves into the Dictionary
+				foreach (var plan in turnPlans)	// collect all units' moves into the Dictionary
 				{
 					// get unit's planned move - if it can't, then assign a default move. NB: this operation must hit
 					// every unit in the game, as step 2 MUST use the Dictionary, and not the map.
-					Move move;
-					if (unit.CanMove())
+					Move move = plan.GetNextMove();
+
+					if (!plan.HasNext())
 					{
-						move = unit.GetMove(unit, _world);
-						debugAtiveUnits = true;
+						// TODO: might be buggy
+						move = Move.Halt(plan);
 					}
-					else
-					{
-						move = Move.Halt(unit);
-					}
-					//var move = unit.CanMove() ? unit.GetMove(unit, _world) : Move.Halt(unit);
 
 					List<MoveResolver> movesToTarget;
 					if (moveDestinations.ContainsKey(move.Destination))
@@ -96,12 +96,6 @@ namespace Model
 					var resolver = new MoveResolver(move);			// wrap so we can easily solve complex dependencies
 					moveOrigins.Add(move.Unit.Position, resolver);	// store for access later
 					movesToTarget.Add(resolver);
-				}
-
-				if (!debugAtiveUnits)
-				{
-					Utils.Printf("Turn {0} breaking mid-loop", debugTurnNumber);
-					break;
 				}
 
 				// STEP 2: MOVE CONFLICT RESOLUTION
@@ -208,7 +202,7 @@ namespace Model
 				_resolved = outcome;
 				if (outcome)
 				{
-					Move.Apply();
+					Move.Accept();
 				}
 				else
 				{

@@ -4,21 +4,26 @@ using System.Collections.Generic;
 namespace Model
 {
 	/// <summary>
-	/// Struct which represents a Unit's *planned* move for a single simulation frame.
-	/// Moves should not be applied until their results have been tested and resolved.
-	/// Cannot be instantiated directly - use one of the static creator methods.
+	/// Class which represents a TurnPlan's desired step for a given frame of simulation
+	/// To construct a Move, use one of the static factory methods provided.
 	/// </summary>
 	public sealed class Move
 	{
 		/// <summary>
+		/// The TurnPlan that this move is a part of.
+		/// </summary>
+		public readonly TurnPlan Owner;
+
+		/// <summary>
 		/// The Unit which this Move represents an action on.
 		/// </summary>
-		public readonly Unit Unit;
+		public Unit Unit { get { return Owner.Unit; }}
+
 		/// <summary>
 		/// The position that the Unit will move to.
 		/// </summary>
 		public readonly TileVector Destination;
-		// TODO: potentialy add an origin position field, so that you don't need to read it from the unit itself
+
 		/// <summary>
 		/// The direction the Unit will turn to make the move.
 		/// </summary>
@@ -26,38 +31,56 @@ namespace Model
 
 		public readonly int EnergyCost;
 
-		private Move(Unit unit, RelativeDirection direction, TileVector destination, int energyCost)
+		private Move(TurnPlan owner, RelativeDirection direction, TileVector destination, int energyCost)
 		{
-			if (unit == null) throw new ArgumentNullException("unit");
-			Unit = unit;
+			Owner = owner;
 			Direction = direction;
 			Destination = destination;
 			EnergyCost = energyCost;
 		}
 
-		public void Apply()
+		public void Accept()
 		{
-			Unit.ResetTimeout();
-			Unit.ApplyMove(this);
+			Owner.AcceptMove(this);
 		}
 
 		public void Reject()
 		{
-			if (Unit.Timeout()) Utils.Printf("Timed out unit {0}", Unit);
-			var newMove = Turn(Unit, Direction);
-			newMove.Apply();
+			var newMove = Turn(Owner, Direction);
+			Owner.RejectMove(this, newMove);
 		}
 
 		/// <summary>
 		/// Constructe a Move which represents a turn followed by a single tile step.
 		/// </summary>
-		/// <param name="unit">the Unit to create the Move for</param>
+		/// <param name="owner">the TurnPlan which created this move</param>
 		/// <param name="direction">the RelativeDirection for it to turn and move in</param>
 		/// <returns></returns>
-		public static Move Step(Unit unit, RelativeDirection direction)
+		public static Move Step(TurnPlan owner, RelativeDirection direction)
 		{
-			TileVector destination = unit.Position + unit.Facing.Turn(direction);
-			return new Move(unit, direction, destination, 2);
+			var destination = owner.Unit.Position + owner.Unit.Facing.Turn(direction);
+			return new Move(owner, direction, destination, 2);
+		}
+
+		/// <summary>
+		/// Construct a Move which represents a unit turning in place.
+		/// </summary>
+		/// <param name="owner">the TurnPlan which created this move</param>
+		/// <param name="direction">the RelativeDirection for it to turn to</param>
+		/// <returns></returns>
+		public static Move Turn(TurnPlan owner, RelativeDirection direction)
+		{
+			return new Move(owner, direction, owner.Unit.Position, 1);
+		}
+
+		/// <summary>
+		/// Construct a Move which represents a unit staying completely stationary.
+		/// </summary>
+		/// <param name="owner">the TurnPlan which created this move</param>
+		/// <returns></returns>
+		public static Move Halt(TurnPlan owner)
+		{
+			return new Move(owner, RelativeDirection.Forward, owner.Unit.Position, 0);
 		}
 
 		/// <summary>
@@ -70,33 +93,12 @@ namespace Model
 		}
 
 		/// <summary>
-		/// Construct a Move which represents a unit turning in place.
-		/// </summary>
-		/// <param name="unit">the Unit to create the Move for</param>
-		/// <param name="direction">the RelativeDirection for it to turn to</param>
-		/// <returns></returns>
-		public static Move Turn(Unit unit, RelativeDirection direction)
-		{
-			return new Move(unit, direction, unit.Position, 1);
-		}
-
-		/// <summary>
 		/// Determine if this Move is a Unit turning in place.
 		/// </summary>
 		/// <returns>true if it is</returns>
 		public bool IsTurn()
 		{
 			return Destination == Unit.Position;
-		}
-
-		/// <summary>
-		/// Construct a Move which represents a unit staying completely stationary.
-		/// </summary>
-		/// <param name="unit">the Unit to create the Move for</param>
-		/// <returns></returns>
-		public static Move Halt(Unit unit)
-		{
-			return new Move(unit, RelativeDirection.Forward, unit.Position, 0);
 		}
 
 		/// <summary>
@@ -117,6 +119,7 @@ namespace Model
 			public override int Compare(Move x, Move y)
 			{
 				// IMPLEMENT MOVE PRIORITY HERE
+				if (x == null || y == null) throw new ArgumentNullException();
 				return x.Unit.Energy - y.Unit.Energy;
 			}
 		}

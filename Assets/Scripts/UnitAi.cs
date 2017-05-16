@@ -21,5 +21,5 @@ public abstract class UnitAi : ScriptableObject
 	/// <param name="unit">the Unit to construct the move for</param>
 	/// <param name="world">the game World which the Unit is in</param>
 	/// <returns>a MovementPlan for this Unit, for the current turn</returns>
-	public abstract MovementPlan GetTurn(Unit unit, World world);
+	public abstract TurnPlan GetMovementPlan(Unit unit, World world);
 }

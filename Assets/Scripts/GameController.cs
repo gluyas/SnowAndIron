@@ -3,7 +3,7 @@ using Model;
 
 public class GameController : MonoBehaviour
 {
-	public GameObject TestUnit;
+	public GameObject[] TestUnits;
 
 	public int UnitCount = 3;
 
@@ -14,9 +14,7 @@ public class GameController : MonoBehaviour
 		_worldController = new WorldController();
 		for (var i = 0; i < UnitCount; i++)
 		{
-			GameObject ua = Instantiate(TestUnit);
-			_worldController.AddUnit(new Unit(ua.GetComponent<UnitAvatar>(),
-				new TileVector(25-UnitCount/2+i, 25), CardinalDirection.North));
+			MakeMech(Instantiate(TestUnits[i%TestUnits.Length]), new TileVector(0, 2*i), CardinalDirection.North);
 		}
 	}
 
@@ -29,6 +27,7 @@ public class GameController : MonoBehaviour
 	{
 		UnitAvatar avatar = unitAvatar.GetComponent<UnitAvatar>();
 		Unit unit = new Unit(avatar, pos, dir);
+		avatar.SetPositionAndOrientation(pos, dir);
 		return _worldController.AddUnit(unit);
 	}
 }
