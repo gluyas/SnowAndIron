@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 
 namespace Model
@@ -8,7 +9,7 @@ namespace Model
 		public readonly int W, E;
 		private Hex[,] _terrain;
 
-		public World(int w, int e)
+        /*public World(int w, int e)
 		{
 			// TODO: implement properly
 			W = w;
@@ -21,9 +22,28 @@ namespace Model
 					_terrain[iw, ie] = new Hex((HexType) ((iw+ie)%3));
 				}
 			}
-		}
+		}*/
+        public World(int map, int mapsize)
+        {
+            W = mapsize;
+            E = mapsize;
+            _terrain = new Hex[mapsize, mapsize];
+            String filename = "map" + map + ".txt";
+            StreamReader reader = File.OpenText(filename);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                string[] items = line.Split('\t');
+                //int w
+                //int e
+                //hextype int
+                HexType type = (HexType)Enum.Parse(typeof(HexType), items[2]);
+                _terrain[int.Parse(items[0]), int.Parse(items[1])] = new Hex(type);
+            }
+        }
 
-		public Hex this[TileVector pos]
+
+        public Hex this[TileVector pos]
 		{
 			get { return this[pos.W, pos.E]; }
 		}
