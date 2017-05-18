@@ -9,9 +9,9 @@ namespace Model
 		private World _world;
 		private List<Unit> _units;
 
-		public WorldController()
+		public WorldController(World world)
 		{
-			_world = new World(50, 50);
+			_world = world;
 			_units = new List<Unit>();
 		}
 
@@ -24,28 +24,21 @@ namespace Model
 		/// <returns>true if the unit was successfully inserted</returns>
 		public bool AddUnit(Unit newUnit)
 		{
-			/**
-			foreach (var unit in _units)
+			var hex = _world[newUnit.Position];
+			if (hex.Occupant == null)
 			{
-				if (newUnit == unit || newUnit.Position == unit.Position) return false;
+				hex.Occupant = newUnit;
+				_units.Add(newUnit);
+				return true;
 			}
-
-			_world[newUnit.Position].Occupant = newUnit;
-			*/
-			_units.Add(newUnit);
-			return true;
+			else return false;
 		}
-
-		private static int _debugTurnNumber = 0;
 
 		/// <summary>
 		/// Simulate the game for a single turn.
 		/// </summary>
 		public void DoTurn()
 		{
-			int debugTurnNumber = _debugTurnNumber++;
-			Utils.Printf("Turn {0} starting", debugTurnNumber);
-
 			var activeUnits = new List<Unit>(_units);
 			var turnPlans = new List<TurnPlan>();
 
@@ -54,57 +47,49 @@ namespace Model
 				turnPlans.Add(unit.GetMovementPlan(_world));
 			}
 
-			int debugFrameIters = 0;
-
-			do // main loop: iterate through each simulation frame
+			while (activeUnits.Count > 0) // main loop: iterate through each simulation frame
 			{
-				if (debugFrameIters++ >= 50)
-				{
-					//Utils.Printf("Turn {0} aborting on frame {1}", debugTurnNumber, debugFrameIters);
-					break;
-				}
-				//Utils.Printf("Turn {0} entering frame {1}", debugTurnNumber, debugFrameIters++);
 				var moveDestinations = new Dictionary<TileVector, List<MoveResolver>>(); // where units want to move to
-				var moveOrigins 	 = new Dictionary<TileVector, MoveResolver>();		 // where units are moving from
+				var moveOrigins = new Dictionary<TileVector, MoveResolver>(); // where units are moving from
 
 				// TODO: also check units which are in combat at the start of the turn
 
 				// STEP 1: AI PROCESSING
-				foreach (var plan in turnPlans)	// collect all units' moves into the Dictionary
+				foreach (var plan in turnPlans) // collect all units' moves into the Dictionary
 				{
-					// get unit's planned move - if it can't, then assign a default move. NB: this operation must hit
-					// every unit in the game, as step 2 MUST use the Dictionary, and not the map.
-					Move move = plan.GetNextMove();
+					var move = plan.GetNextMove();
 
-					if (!plan.HasNext())
-					{
-						// TODO: might be buggy
-						move = Move.Halt(plan);
-					}
+					var resolver = new MoveResolver(move); // wrap so we can easily solve complex dependencies
+					moveOrigins.Add(move.Unit.Position, resolver); // register move origin
 
-					List<MoveResolver> movesToTarget;
-					if (moveDestinations.ContainsKey(move.Destination))
+					if (plan.IsActive() && _world[move.Destination] != null) // verify move is legal
 					{
-						movesToTarget = moveDestinations[move.Destination];
-					}
-					else // initialise the list if it doesn't exist yet
-					{
-						movesToTarget = new List<MoveResolver>(6);
-						moveDestinations.Add(move.Destination, movesToTarget);
-					}
+						List<MoveResolver> movesToDestination;
+						if (moveDestinations.ContainsKey(move.Destination))
+						{
+							movesToDestination = moveDestinations[move.Destination];
+						}
+						else // initialise the list if it doesn't exist yet
+						{
+							movesToDestination = new List<MoveResolver>(6);
+							moveDestinations.Add(move.Destination, movesToDestination);
+						}
 
-					var resolver = new MoveResolver(move);			// wrap so we can easily solve complex dependencies
-					moveOrigins.Add(move.Unit.Position, resolver);	// store for access later
-					movesToTarget.Add(resolver);
+						movesToDestination.Add(resolver);
+					}
+					else // illegal move; reject it early and do not process its destination
+					{
+						resolver.Resolve(false);
+					}
 				}
 
 				// STEP 2: MOVE CONFLICT RESOLUTION
-				foreach (var entry in moveDestinations)	// check all future mech positions, finalise moves
+				foreach (var entry in moveDestinations) // check all future mech positions, finalise moves
 				{
 					var destination = entry.Key;
 					var moves = entry.Value;
 
-					MoveResolver dependency;	// find the move from the destination tile
+					MoveResolver dependency; // find the move from the destination tile
 					if (moveOrigins.ContainsKey(destination))
 					{
 						dependency = moveOrigins[destination];
@@ -140,20 +125,19 @@ namespace Model
 
 					if (dependency != null) moves[best].SetParent(dependency);
 					else moves[best].Resolve(true);
-					// TODO: the World is not actually updated with unit positions, figure out a good way to implement
 				}
 
-				/*
 				// STEP 3: COMBAT DETERMINATION
-				var pendingCombat = new HashSet<Combat>();	// stops doubling up of the same combat
+				var pendingCombat = new HashSet<Combat>(); // stops doubling up of the same combat
 
-				for (var i = activeUnits.Count - 1; i >= 0; i--)	// iterate backwards so we can remove elements
+				for (var i = activeUnits.Count - 1; i >= 0; i--) // iterate backwards so we can remove elements
 				{
 					var unit = activeUnits[i];
 					// TODO: implement more complex combat engagement rules here
-					foreach (var adj in unit.Position.Adjacent())
+					foreach (var adj in unit.Position.Adjacent().Select(pos => _world[pos])) // for each adjacent Hex
 					{
-						var neighbour = _world[adj].Occupant;
+						if (adj == null) continue;
+						var neighbour = adj.Occupant;
 						if (neighbour != null && neighbour.Owner != unit.Owner)
 						{
 							pendingCombat.Add(new Combat(unit, neighbour));
@@ -170,22 +154,20 @@ namespace Model
 						combat.Apply();
 					}
 				}
-				*/
-			} while (activeUnits.Count > 0);
+
+			}
 
 			foreach (var unit in _units)
 			{
 				unit.Reset();
 			}
-
-			Utils.Printf("Turn {0} exiting after {1} frames", debugTurnNumber, debugFrameIters);
 		}
 
 		private class MoveResolver
 		{
 			public readonly Move Move;
+			public bool? Resolved { get; private set; }
 
-			private bool? _resolved = null;
 			private MoveResolver _root;	// so we can detect cycles
 			private List<MoveResolver> _dependents = new List<MoveResolver>();
 
@@ -197,9 +179,9 @@ namespace Model
 
 			public bool Resolve(bool outcome)
 			{
-				if (_resolved.HasValue) return false;	// already been resolved
+				if (Resolved.HasValue) return false;	// already been resolved
 
-				_resolved = outcome;
+				Resolved = outcome;
 				if (outcome)
 				{
 					Move.Accept();
@@ -220,9 +202,9 @@ namespace Model
 			{
 				if (this._root != this) throw new Exception("Assigned multiple dependencies");
 
-				if (parent._resolved.HasValue) // already been decided: propogate result
+				if (parent.Resolved.HasValue) // already been decided: propogate result
 				{
-					Resolve(parent._resolved.Value);
+					Resolve(parent.Resolved.Value);
 				}
 				else if (parent._root == this)			// cyclic, unresolved dependencies: resolve true
 				{

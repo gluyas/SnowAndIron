@@ -50,9 +50,9 @@ namespace Model
 			if (--_timeout == 0) OnTimeout();
 		}
 
-		public bool HasNext()
+		public bool IsActive()
 		{
-			return _timeout > 0 && Unit.Energy > 0;
+			return _timeout > 0 && Unit.CanMove();
 		}
 
 		// SUBCLASS HOOKS
@@ -106,14 +106,18 @@ namespace Model
 			return this.Step(Unit.Facing.Cross(cardinal));
 		}
 
-		/// <summary>
-		///
-		/// </summary>
-		/// <param name="m"></param>
-		private void ApplyMove(Move m)
+		private void ApplyMove(Move move)
 		{
-			// TODO: update the World object!
-			Unit.ApplyMove(m);
+			if (move.IsStep())	// update the board if this unit is moving position
+			{
+				var origin = World[Unit.Position];
+				if (origin.Occupant == Unit) // NullReferenceException here indicates a move from a bad position
+				{
+					origin.Occupant = null;
+				}
+				World[move.Destination].Occupant = Unit;
+			}
+			Unit.ApplyMove(move);
 		}
 	}
 }

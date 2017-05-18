@@ -5,17 +5,20 @@ namespace Model
 {
 	public class World
 	{
+		public readonly int W, E;
 		private Hex[,] _terrain;
 
 		public World(int w, int e)
 		{
 			// TODO: implement properly
+			W = w;
+			E = e;
 			_terrain = new Hex[w, e];
 			for (var iw = 0; iw < w; iw++)
 			{
 				for (var ie = 0; ie < e; ie++)
 				{
-					_terrain[iw, ie] = new Hex(0);
+					_terrain[iw, ie] = new Hex((HexType) ((iw+ie)%3));
 				}
 			}
 		}
@@ -27,7 +30,17 @@ namespace Model
 
 		public Hex this[int w, int e]
 		{
-			get { return _terrain[w, e]; }
+			get
+			{
+				if (IsInRange(w, e)) return _terrain[w, e];
+				else return null;
+			}
+		}
+
+		private bool IsInRange(int w, int e)
+		{
+			return w >= 0 && w < W &&
+			       e >= 0 && e < E;
 		}
 	}
 

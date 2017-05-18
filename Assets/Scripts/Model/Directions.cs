@@ -2,6 +2,7 @@
 
 namespace Model
 {
+	[Serializable]
 	public enum CardinalDirection
 	{
 		North,
@@ -12,6 +13,7 @@ namespace Model
 		Northwest
 	}
 
+	[Serializable]
 	public enum RelativeDirection
 	{
 		Forward,

@@ -1,26 +1,52 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Model;
 
 public class GameController : MonoBehaviour
 {
 	public GameObject[] TestUnits;
 
+	public GameObject[] HexModels;
+	private List<GameObject> _hexInstances = new List<GameObject>();
+
 	public int UnitCount = 3;
+	public int Size = 25;
 
 	private WorldController _worldController;
 
 	private void Start()
 	{
-		_worldController = new WorldController();
+		var world = new World(Size, Size);
+		_worldController = new WorldController(world);
+		RenderWorld(world);
+
 		for (var i = 0; i < UnitCount; i++)
 		{
-			MakeMech(Instantiate(TestUnits[i%TestUnits.Length]), new TileVector(0, 2*i), CardinalDirection.North);
+			var pos = i % 2 == 0 ? new TileVector(i, 0) : new TileVector(0, i);
+			MakeMech(Instantiate(TestUnits[i%TestUnits.Length]), pos, CardinalDirection.North);
 		}
 	}
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.A)) _worldController.DoTurn();
+		if (Input.GetKeyDown(KeyCode.Z)) _worldController.DoTurn();
+	}
+
+	private void RenderWorld(World world)
+	{
+		for (var w = 0; w < world.W; w++)
+		{
+			for (var e = 0; e < world.E; e++)
+			{
+				var hex = world[w, e];
+				if (hex != null)
+				{
+					var tile = Instantiate(HexModels[(int) hex.Type]);
+					tile.transform.position = new TileVector(w, e).ToVector3();
+					_hexInstances.Add(tile);
+				}
+			}
+		}
 	}
 
 	public bool MakeMech(GameObject unitAvatar, TileVector pos, CardinalDirection dir)
