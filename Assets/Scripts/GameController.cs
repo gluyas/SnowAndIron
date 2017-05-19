@@ -10,13 +10,14 @@ public class GameController : MonoBehaviour
 	private List<GameObject> _hexInstances = new List<GameObject>();
 
 	public int UnitCount = 3;
-    public int mapsize = 25;
-    public int map = 1;
+    public int mapsize = 20;
+    public int numberOfMaps = 1;
 
 	private WorldController _worldController;
 
 	private void Start()
 	{
+        int map = Random.Range(0, numberOfMaps);
 		var world = new World(map, mapsize);
 		_worldController = new WorldController(world);
 		RenderWorld(world);

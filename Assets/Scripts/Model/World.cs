@@ -31,14 +31,24 @@ namespace Model
             String filename = "map" + map + ".txt";
             StreamReader reader = File.OpenText(filename);
             string line;
+            int i = 0;
             while ((line = reader.ReadLine()) != null)
             {
-                string[] items = line.Split('\t');
-                //int w
-                //int e
-                //hextype int
-                HexType type = (HexType)Enum.Parse(typeof(HexType), items[2]);
-                _terrain[int.Parse(items[0]), int.Parse(items[1])] = new Hex(type);
+                //just hextype
+                string[] mapline = line.Split('\t');
+                for(int j = 0; j < mapline.Length; j++)
+                {
+                        if(mapline[j] == "-")
+                    {
+                        //Do nothing
+                    }
+                    else
+                    {
+                        HexType type = (HexType)int.Parse(mapline[j]);
+                        _terrain[i, j] = new Hex(type);
+                    }
+                }
+                i++;
             }
         }
 
