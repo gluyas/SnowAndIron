@@ -138,7 +138,7 @@ namespace Model
 					{
 						if (adj == null) continue;
 						var neighbour = adj.Occupant;
-						if (neighbour != null && neighbour.Owner != unit.Owner)
+						if (neighbour != null && neighbour.Owner.num != unit.Owner.num)
 						{
 							pendingCombat.Add(new Combat(unit, neighbour));
 						}
