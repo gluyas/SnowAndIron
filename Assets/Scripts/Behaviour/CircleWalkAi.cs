@@ -3,7 +3,7 @@ using System.CodeDom;
 using Model;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Assets/Scripts/Behavior")]
+[CreateAssetMenu(fileName = "Assets/Scripts/Behaviour/CircleWalkAi")]
 public class CircleWalkAi : UnitAi
 {
 	public bool TurnRight = false;

@@ -24,8 +24,8 @@ public class GameController : MonoBehaviour
 		var world = new World(map, mapsize);
 		_worldController = new WorldController(world);
 		RenderWorld(world);
-		players [0] = new Player (1);
-		players [1] = new Player (2);
+		players[0] = new Player(1);
+		players[1] = new Player(2);
 
 		for (var i = 0; i < UnitCount; i++)
 		{

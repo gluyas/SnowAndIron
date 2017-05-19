@@ -2249,6 +2249,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 5
   MaxEnergy: 7
-  Ai: {fileID: 11400000, guid: 178a7444f1f53c04297543f6da035f47, type: 2}
+  Ai: {fileID: 11400000, guid: b6fa19f5f4ea72046ac9a7a17b6aff09, type: 2}
   MoveSpeed: 5
   TurnSpeed: 180
