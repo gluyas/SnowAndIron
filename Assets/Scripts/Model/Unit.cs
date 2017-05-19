@@ -16,7 +16,7 @@ namespace Model
 		private TurnPlan _currentMove;
 
 		// Unit stats and behaviour
-		public readonly int Owner = 0; // TODO: update with better semantics
+		public readonly Player Owner; // TODO: update with better semantics
 
 		public readonly int MaxHealth;
 		public int Health { get; private set; }
@@ -31,7 +31,7 @@ namespace Model
 		// Private fields
 		private readonly UnitAvatar _avatar;	// Unity representation
 
-		public Unit (UnitAvatar avatar, TileVector position, CardinalDirection facing)
+		public Unit (UnitAvatar avatar, TileVector position, CardinalDirection facing, Player owner)
 		{
 			_avatar = avatar;
 
@@ -45,6 +45,7 @@ namespace Model
 			Energy = MaxEnergy;
 
 			_moveMethod = _avatar.Ai.GetMovementPlan;
+			Owner = owner;
 
 		}
 

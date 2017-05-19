@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
 
 	public int UnitCount = 3;
 	public int Size = 25;
+	public Player[] players = new Player[2];
 
 	private WorldController _worldController;
 
@@ -19,11 +20,13 @@ public class GameController : MonoBehaviour
 		var world = new World(Size, Size);
 		_worldController = new WorldController(world);
 		RenderWorld(world);
+		players [0] = new Player (1);
+		players [1] = new Player (2);
 
 		for (var i = 0; i < UnitCount; i++)
 		{
 			var pos = i % 2 == 0 ? new TileVector(i, 0) : new TileVector(0, i);
-			MakeMech(Instantiate(TestUnits[i%TestUnits.Length]), pos, CardinalDirection.North);
+			MakeMech(Instantiate(TestUnits[i%TestUnits.Length]), pos, CardinalDirection.North, players[i%2]);
 		}
 	}
 
@@ -49,10 +52,11 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	public bool MakeMech(GameObject unitAvatar, TileVector pos, CardinalDirection dir)
+	public bool MakeMech(GameObject unitAvatar, TileVector pos, CardinalDirection dir, Player owner)
 	{
 		UnitAvatar avatar = unitAvatar.GetComponent<UnitAvatar>();
-		Unit unit = new Unit(avatar, pos, dir);
+		Unit unit = new Unit(avatar, pos, dir, owner);
+		owner.AddUnit (unit);
 		avatar.SetPositionAndOrientation(pos, dir);
 		return _worldController.AddUnit(unit);
 	}
