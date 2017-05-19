@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -145,7 +145,8 @@ MonoBehaviour:
   - {fileID: 100016, guid: 6e7965859e94d4f43a02aa43f2c60dfc, type: 3}
   - {fileID: 100002, guid: 7471a8ff2e3b9c142b6f629ebae1f069, type: 3}
   UnitCount: 4
-  Size: 4
+  mapsize: 25
+  numberOfMaps: 2
 --- !u!4 &398766380
 Transform:
   m_ObjectHideFlags: 0
@@ -345,6 +346,11 @@ Prefab:
       propertyPath: HexModels.Array.data[2]
       value: 
       objectReference: {fileID: 100002, guid: 7471a8ff2e3b9c142b6f629ebae1f069, type: 3}
+    - target: {fileID: 114286697362315744, guid: bf68f8c48c151c64db4d9df49bebdbdc,
+        type: 2}
+      propertyPath: numberOfMaps
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bf68f8c48c151c64db4d9df49bebdbdc, type: 2}
   m_IsPrefabParent: 0
