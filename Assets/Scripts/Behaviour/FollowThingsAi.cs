@@ -127,7 +127,7 @@ public class FollowThingsPlan : TurnPlan
 			}
 			return Step(Unit.Position.GetApproximateDirectionTo(_objectivePos).Value);
 		}
-		return Step(RelativeDirection.Forward);
+		return Step((CardinalDirection) new System.Random().Next(6));	// TODO: fix the rest of the class
 	}
 
 	private bool ShouldFollowObjective(Objective o)

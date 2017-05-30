@@ -106,6 +106,13 @@ namespace Model
 			var startingHealth = this.Health;	// trade energy for health with the other unit
 			this.Health -= other.Energy;		// implementing combat in two halves like this guarantees symmetry
 			other.Energy -= startingHealth;
+
+			// TODO: crit chance
+			if (this.GetHashCode() > other.GetHashCode())
+			{
+				other.Health = 0;
+				other.Kill();
+			}
 		}
 	}
 }
