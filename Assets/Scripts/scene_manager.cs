@@ -12,7 +12,7 @@ public class scene_manager : MonoBehaviour {
 	
 	// Update is called once per frame
 	public void start_game () {
-        SceneManager.LoadScene("test");
+        SceneManager.LoadScene("arena");
 	}
 
     public void end()

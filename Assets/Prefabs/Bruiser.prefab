@@ -684,8 +684,8 @@ MonoBehaviour:
   MaxHealth: 1
   MaxEnergy: 2
   Ai: {fileID: 11400000, guid: 0603220bb5a52f045abc687356222217, type: 2}
-  MoveSpeed: 4
-  TurnSpeed: 100
+  MoveSpeed: 5
+  TurnSpeed: 180
 --- !u!137 &137002257506986638
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

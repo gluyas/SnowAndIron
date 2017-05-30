@@ -9,5 +9,8 @@ EditorBuildSettings:
     path: Assets/_scene/_menu.unity
     guid: c27c8ade7f4bebd4c8e5fc7d65524e73
   - enabled: 1
+    path: Assets/_scene/arena.unity
+    guid: a841cb9e05e23854d991bc622618ecda
+  - enabled: 0
     path: Assets/_scene/test.unity
     guid: 18807bc424fac7a4db776cc0e8171106
