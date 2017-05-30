@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 939ea8e7f9b440d4a8c84f8059fe2232
-timeCreated: 1493766223
+guid: 503b9633f1d4a4013bbd2b75f3146e44
+timeCreated: 1493954847
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -50,7 +50,6 @@ ModelImporter:
     100084: pTorus1
     100086: transform1
     100088: //RootNode
-    100090: group2
     400000: group1
     400002: ikHandle1
     400004: ikHandle2
@@ -96,7 +95,6 @@ ModelImporter:
     400084: pTorus1
     400086: transform1
     400088: //RootNode
-    400090: group2
     2300000: pCone1
     2300002: pCone2
     2300004: pCone3
@@ -323,10 +321,10 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
   tangentSpace:
-    normalSmoothAngle: 60
-    normalImportMode: 0
+    normalSmoothAngle: 0
+    normalImportMode: 1
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0

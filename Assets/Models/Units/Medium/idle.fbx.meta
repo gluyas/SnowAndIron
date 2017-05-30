@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 436abcc79a7b79e4084e0b2f6faee63d
-timeCreated: 1495167655
+guid: 0c533ad15ac244b3eaa534d1790913b0
+timeCreated: 1493954846
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -50,7 +50,6 @@ ModelImporter:
     100084: pSphere7
     100086: pTorus1
     100088: transform1
-    100090: group2
     400000: group1
     400002: //RootNode
     400004: ikHandle1
@@ -96,7 +95,6 @@ ModelImporter:
     400084: pSphere7
     400086: pTorus1
     400088: transform1
-    400090: group2
     2300000: pCone1
     2300002: pCone2
     2300004: pCone3
@@ -187,7 +185,125 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/pCube1
+        weight: 1
+      - path: group1/pCube2
+        weight: 1
+      - path: group1/pCube3
+        weight: 1
+      - path: group1/pCube4
+        weight: 1
+      - path: group1/pCylinder1
+        weight: 1
+      - path: group1/pCylinder2
+        weight: 1
+      - path: group1/pCylinder8
+        weight: 1
+      - path: group1/pSphere1
+        weight: 1
+      - path: group1/pSphere2
+        weight: 1
+      - path: group1/pTorus1
+        weight: 1
+      - path: ikHandle1
+        weight: 1
+      - path: ikHandle2
+        weight: 1
+      - path: ikHandle3
+        weight: 1
+      - path: ikHandle4
+        weight: 1
+      - path: joint1
+        weight: 1
+      - path: joint1/joint5
+        weight: 1
+      - path: joint1/joint5/joint6
+        weight: 1
+      - path: joint1/joint5/joint6/joint7
+        weight: 1
+      - path: joint1/joint5/joint6/pCone4
+        weight: 1
+      - path: joint1/joint5/pCylinder6
+        weight: 1
+      - path: joint14
+        weight: 1
+      - path: joint14/joint11
+        weight: 1
+      - path: joint14/joint11/joint12
+        weight: 1
+      - path: joint14/joint11/joint12/joint13
+        weight: 1
+      - path: joint14/joint11/joint12/pCone1
+        weight: 1
+      - path: joint14/joint11/pCylinder7
+        weight: 1
+      - path: joint14/joint11/pCylinder7/transform1
+        weight: 1
+      - path: joint15
+        weight: 1
+      - path: joint15/joint2
+        weight: 1
+      - path: joint15/joint2/joint3
+        weight: 1
+      - path: joint15/joint2/joint3/joint4
+        weight: 1
+      - path: joint15/joint2/joint3/pCone2
+        weight: 1
+      - path: joint15/joint2/pCylinder4
+        weight: 1
+      - path: joint16
+        weight: 1
+      - path: joint16/joint8
+        weight: 1
+      - path: joint16/joint8/joint9
+        weight: 1
+      - path: joint16/joint8/joint9/joint10
+        weight: 1
+      - path: joint16/joint8/joint9/pCone3
+        weight: 1
+      - path: joint16/joint8/pCylinder5
+        weight: 1
+      - path: pSphere3
+        weight: 1
+      - path: pSphere5
+        weight: 1
+      - path: pSphere6
+        weight: 1
+      - path: pSphere7
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -205,10 +321,10 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
   tangentSpace:
-    normalSmoothAngle: 60
-    normalImportMode: 0
+    normalSmoothAngle: 0
+    normalImportMode: 1
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
