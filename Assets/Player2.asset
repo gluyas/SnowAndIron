@@ -14,3 +14,4 @@ MonoBehaviour:
   Name: Player 2
   Color: {r: 1, g: 1, b: 0, a: 0}
   Loadout: {fileID: 11400000, guid: 605250f3d6148fb438c42e81e4772f31, type: 2}
+  Score: 1

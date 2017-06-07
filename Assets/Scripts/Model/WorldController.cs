@@ -178,6 +178,7 @@ namespace Model
 						
 						if (unit1.IsDead())
 						{
+							unit2.Owner.Score++;
 							turnPlans.Remove(unit1);
 							activeUnits.Remove(unit1);
 							_world[unit1.Position].Occupant = null; // NullRef here indicates bad unit position
@@ -186,6 +187,7 @@ namespace Model
 						}
 						if (unit2.IsDead())
 						{
+							unit1.Owner.Score++;
 							turnPlans.Remove(unit2);
 							activeUnits.Remove(unit2);
 							_world[unit2.Position].Occupant = null; // NullRef here indicates bad unit position

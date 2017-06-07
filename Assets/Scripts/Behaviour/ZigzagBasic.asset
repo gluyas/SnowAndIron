@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb7a63bcfd04a6780aaae949194b64b, type: 3}
   m_Name: ZigzagBasic
   m_EditorClassIdentifier: 
-  TurnDirection: 4
+  TurnDirection: 5

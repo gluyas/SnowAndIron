@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Model
@@ -96,7 +96,15 @@ namespace Model
 				{
 					origin.Occupant = null;
 				}
-				World[move.Destination].Occupant = Unit;
+				var dest = World [move.Destination];
+				dest.Occupant = Unit;
+				if (dest.hasObjective()) {
+					if (dest.Objective.controllingPlayer != null) {
+						dest.Objective.controllingPlayer.Score -= 10;
+					}
+					dest.Objective.controllingPlayer = Unit.Owner;
+					Unit.Owner.Score += 10;
+				}
 			}
 			Unit.ApplyMove(move);
 		}

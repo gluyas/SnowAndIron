@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Model;
 using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
 {	
 	public Player[] Players = new Player[2];
+	public Text score;
 
     public int MapSize = 20;
     public int NumberOfMaps = 1;

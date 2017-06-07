@@ -7,6 +7,8 @@ public sealed class Player : ScriptableObject
 	public Color Color;
 	public Loadout Loadout;
 
+	public int Score = 0;
+
 	public GameObject[] Units	// simple alias for the loadout
 	{
 		get { return Loadout.Units; }
