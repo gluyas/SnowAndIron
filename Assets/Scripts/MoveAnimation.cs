@@ -11,18 +11,21 @@ public class MoveAnimation : IAnimation
 	private UnitAvatar _avatar;
 
 	private Vector3 _targetPos;
+	private bool _isStep;
 
 	private Quaternion _targetRot;
 
 	private float _targetEnergy;
 
-	public MoveAnimation(Unit unit, TileVector destination, CardinalDirection direction, int energyCost)
+	public MoveAnimation(Unit unit, TileVector origin, TileVector destination, CardinalDirection direction, int energyCost)
 	{
 		_avatar = unit.Avatar;
 		_targetPos = destination.ToVector3();
 		_targetRot = direction.GetBearingRotation();
 		// TODO: implement energycost, advanced bar animation
 		_targetEnergy = unit.Energy;
+		_isStep = origin != destination;
+		Utils.Print (_isStep);
 	}
 
 	public bool ApplyAnimation(float time)
@@ -49,6 +52,11 @@ public class MoveAnimation : IAnimation
 
 			if (_avatar.Position == _targetPos && _avatar.Rotation == _targetRot)  // animation complete
 			{
+
+				if (_isStep) 
+				{
+
+				}
 				_avatar.UpdateEnergy(_targetEnergy);
 				return true;
 			}
