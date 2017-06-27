@@ -11,6 +11,8 @@ public class WorldGenerator : MonoBehaviour {
     public GameController GameController;
     public int NumberOfMaps = 1;
     public int MapSize = 20;
+    public float TileScale = 1f;
+    
     public GameObject[] HexModels;
     private List<GameObject> _hexInstances = new List<GameObject>();
     private GameObject[] instancedTiles;
@@ -38,6 +40,7 @@ public class WorldGenerator : MonoBehaviour {
 	
     private void RenderWorld(World world)
     {
+        var rng = new System.Random();
         for (var w = 0; w < world.W; w++)
         {
             for (var e = 0; e < world.E; e++)
@@ -49,6 +52,9 @@ public class WorldGenerator : MonoBehaviour {
                     var tile = Instantiate(HexModels[(int)hex.Type], this.transform, true);
                     tile.tag = "Tile";
                     tile.transform.position = new TileVector(w, e).ToVector3();
+                    tile.transform.localScale *= TileScale;
+                    tile.transform.rotation = ((CardinalDirection) rng.Next(6)).GetBearingRotation();
+                    
                     _hexInstances.Add(tile);
                     if(hex.Type == HexType.Objective)
                     {
