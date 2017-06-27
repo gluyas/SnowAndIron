@@ -1,6 +1,7 @@
 ﻿﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+ using UnityEditor;
+ using UnityEngine;
 
 public class GuiComponents : MonoBehaviour {
 	
@@ -24,6 +25,24 @@ public class GuiComponents : MonoBehaviour {
 	}
 	
 	// HIT EFFECTS
+
+	public AnimationCurve AttackMotion = AnimationCurve.Linear(0, 0, 0, 0);
+	public static AnimationCurve GetAttackMotion()
+	{
+		return _instance.AttackMotion;
+	}
+	
+	public float AttackMotionImpactTime = 0.75f;	// as a percent
+	public static float GetAttackMotionImpactTime()
+	{
+		return _instance.AttackMotionImpactTime;
+	}
+	
+	public float AttackMotionTimeScale = 1f;
+	public static float GetAttackMotionTimeScale()
+	{
+		return _instance.AttackMotionTimeScale;
+	}
 	
 	public Color HitPrimaryColor = Color.yellow;
 	public float HitPrimaryTime = 0.1f;
