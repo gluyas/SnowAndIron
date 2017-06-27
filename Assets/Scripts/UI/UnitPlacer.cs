@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Model;
+using UnityEngine.UI;
 
 public class UnitPlacer : MonoBehaviour {
 
@@ -11,6 +12,8 @@ public class UnitPlacer : MonoBehaviour {
 	public int maxTiles;
 
 	public PreviewTile PreviewTile;
+
+//	public Image[] Bar;
 
 	/// <summary>
 	/// Key bindings to select the units in the array.
@@ -38,7 +41,8 @@ public class UnitPlacer : MonoBehaviour {
 	{
 		get { return Player.Units; }
 	}
-	
+
+	private Image _c;
 	private Transform _t;
 	private GameObject _preview;
 	private PreviewTile _previewTile;
@@ -62,6 +66,9 @@ public class UnitPlacer : MonoBehaviour {
 		
 		selectedTile = 0;
 		maxTiles = 0;
+
+		_c = GetComponent<Image>();
+		_c.color = new Color ();
 	}
 
 
