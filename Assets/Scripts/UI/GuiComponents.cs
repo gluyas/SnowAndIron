@@ -49,6 +49,26 @@ public class GuiComponents : MonoBehaviour {
 	{
 		return _instance.DeployEffect;
 	}
+
+	public GameObject DeployProjectile;
+	public static GameObject GEtDeployProjectile()
+	{
+		return _instance.DeployProjectile;
+	}
+	
+	// DEPLOY ANIMATION
+
+	public float DeployEntranceTime = 0.5f;
+	public static float GetDeployEntranceTime()
+	{
+		return _instance.DeployEntranceTime;
+	}
+
+	public float DeplotExitTime = 0.5f;
+	public static float GetDeplotExitTime()
+	{
+		return _instance.DeplotExitTime;
+	}
 	
 	// EXPLOSIONS
 	
