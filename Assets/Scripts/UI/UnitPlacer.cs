@@ -53,6 +53,8 @@ public class UnitPlacer : MonoBehaviour {
 	private CardinalDirection _selectedDir 		= CardinalDirection.North;
 	private bool _selectedMirrored;
 
+
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -62,8 +64,7 @@ public class UnitPlacer : MonoBehaviour {
 		_previewTile = Instantiate(PreviewTile, _t);
 		_c = Player.Color;
 		_c.a = 0.7f;
-		_previewTile.Paint(_c);
-		
+		_previewTile.Paint(_c);		
 		selectedTile = 0;
 		maxTiles = 0;
 	}
@@ -119,7 +120,9 @@ public class UnitPlacer : MonoBehaviour {
 					break;
 				}
 			}
+
 		}
+
 	}
 
 	private void SelectUnit(int index) 
@@ -153,7 +156,7 @@ public class UnitPlacer : MonoBehaviour {
 	private void UpdatePathPreview()
 	{
 		for (var i = _pathPreview.Count - 1; i >= 0; i--)		// clean up old preview
-		{
+		{	
 			Destroy(_pathPreview[i].gameObject);
 			_pathPreview.RemoveAt(i);
 		}
