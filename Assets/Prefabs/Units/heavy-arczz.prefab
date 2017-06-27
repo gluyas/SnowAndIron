@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 4622245488730490}
   - component: {fileID: 95234494621409814}
   - component: {fileID: 114397476136432390}
+  - component: {fileID: 136180346567577872}
   m_Layer: 0
   m_Name: heavy-arczz
   m_TagString: Untagged
@@ -2281,3 +2282,17 @@ MonoBehaviour:
   Ai: {fileID: 11400000, guid: 3c3a284c4fc062e4a808ef10c1e262b6, type: 2}
   MoveSpeed: 4
   TurnSpeed: 100
+  PaintComponents: []
+--- !u!136 &136180346567577872
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272392765498076}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.02
+  m_Height: 0.1
+  m_Direction: 1
+  m_Center: {x: -0.003, y: 0, z: 0}
