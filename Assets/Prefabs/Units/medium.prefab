@@ -976,8 +976,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1682622774890392}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.060986, y: -0.35498, z: -0.029889}
-  m_LocalScale: {x: 18.329948, y: 18.32995, z: 18.32995}
+  m_LocalPosition: {x: 0.013382, y: -0.077894, z: -0.0065588}
+  m_LocalScale: {x: 22.132774, y: 22.132772, z: 22.132772}
   m_Children:
   - {fileID: 4809697924163556}
   - {fileID: 4082188635148886}
@@ -2342,4 +2342,5 @@ MonoBehaviour:
   Ai: {fileID: 11400000, guid: ee53000eb8caea6408a0e50dc603d908, type: 2}
   MoveSpeed: 5
   TurnSpeed: 180
-  PaintComponents: []
+  PaintComponents:
+  - {fileID: 23111786129346562}
