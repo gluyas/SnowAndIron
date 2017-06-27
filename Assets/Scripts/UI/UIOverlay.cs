@@ -6,6 +6,10 @@ using UnityEngine.UI;
 public class UIOverlay : MonoBehaviour {
 
     public GameController gameController;
+
+	public Image roundNumberBar;
+	public int numberOfRounds;
+	
     public Player p1;
     public Player p2;
 
@@ -27,9 +31,7 @@ public class UIOverlay : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
-        
+	void Update () {      
         roundNum = "" + gameController.RoundNumber.ToString();
         roundNumber.text = roundNum;
 
@@ -44,6 +46,7 @@ public class UIOverlay : MonoBehaviour {
 
         p2kill = "" + p2.DestroyedUnits.ToString();
         p2killed.text = p2kill;
-
+		
+		roundNumberBar.fillAmount = (float) gameController.RoundNumber / numberOfRounds;
     }
 }
