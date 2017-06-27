@@ -24,6 +24,46 @@ public class GuiComponents : MonoBehaviour {
 		return _instance.EpBar;
 	}
 	
+	// PARTICLE EFFECTS
+
+	public float EffectHeightOffset;
+	public static Vector3 GetEffectHeightOffset()
+	{
+		return _instance.EffectHeightOffset * ModelExtensions.Up;
+	}
+	
+	public GameObject ExplosionEffect;
+	public static GameObject GetExplosionEffect()
+	{
+		return _instance.ExplosionEffect;
+	}
+	
+	public GameObject ImpactEffect;
+	public static GameObject GetImpactEffect()
+	{
+		return _instance.ImpactEffect;
+	}
+	
+	public GameObject DeployEffect;
+	public static GameObject GetDeployEffect()
+	{
+		return _instance.DeployEffect;
+	}
+	
+	// EXPLOSIONS
+	
+	public AnimationCurve ExplosionMotion = AnimationCurve.Linear(0, 0, 0, 0);
+	public static AnimationCurve GetExplosionMotion()
+	{
+		return _instance.ExplosionMotion;
+	}
+	
+	public float ExplosionMotionTimeScale = 1f;
+	public static float GetExplosionMotionTimeScale()
+	{
+		return _instance.ExplosionMotionTimeScale;
+	}
+	
 	// HIT EFFECTS
 
 	public AnimationCurve AttackMotion = AnimationCurve.Linear(0, 0, 0, 0);

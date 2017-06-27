@@ -1,6 +1,7 @@
 ﻿﻿using System;
 using UnityEngine;
 using Model;
+ using Object = UnityEngine.Object;
 
 public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 {
@@ -11,6 +12,8 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 
 	private Vector3 _attackVector;
 	private Vector3 _startPos;
+
+	private GameObject _impactEffect;
 
 	private float _animationTime = 0;
 	private AnimationCurve AttackCurve { get { return GuiComponents.GetAttackMotion(); } }
@@ -37,6 +40,13 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 
 			if (_animationTime >= ImpactTime && _impactStage >= 0)	// impact effects!
 			{
+				if (_impactEffect == null)
+				{
+					_impactEffect = Object.Instantiate(GuiComponents.GetImpactEffect());
+					_impactEffect.transform.position = Owner.Position;
+					_impactEffect.transform.position += GuiComponents.GetEffectHeightOffset();
+				}
+				
 				var color = Color.black;
 				float flashTime = 0;
 				switch (_impactStage)
