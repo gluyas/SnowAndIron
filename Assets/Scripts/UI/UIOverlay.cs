@@ -6,8 +6,10 @@ using UnityEngine.UI;
 public class UIOverlay : MonoBehaviour {
 
     public GameController gameController;
+
 	public UnitPlacer p1UnitPlacer;
 	public UnitPlacer p2UnitPlacer;
+
     public Player p1;
     public Player p2;
 
@@ -42,9 +44,7 @@ public class UIOverlay : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
-        
+	void Update () {      
         roundNum = "" + gameController.RoundNumber.ToString();
         roundNumber.text = roundNum;
 

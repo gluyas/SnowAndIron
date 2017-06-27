@@ -111,11 +111,15 @@ namespace Model
 			// TODO: ensure units don't go into negative energy
 			if (move.Unit != this) throw new ArgumentException("Applied move does not reference this unit");
 
+			var startPos = Position;
+
 			Facing = Turn(move.Direction);
 			Position = move.Destination;
+
+			UnityEngine.Debug.LogFormat ("{0} -> {1}", startPos, Position);
 			Energy -= move.EnergyCost;
 			
-			Avatar.EnqueueAnimation(new MoveAnimation(this, Position, Facing, move.EnergyCost));
+			Avatar.EnqueueAnimation(new MoveAnimation(this, startPos, Position, Facing, move.EnergyCost));
 		}
 
 		public void ApplyCombat(Combat combat)

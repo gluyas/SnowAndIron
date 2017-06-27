@@ -976,8 +976,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1682622774890392}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.060986, y: -0.35498, z: -0.029889}
-  m_LocalScale: {x: 18.329948, y: 18.32995, z: 18.32995}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 24.788708, y: 24.788706, z: 24.788706}
   m_Children:
   - {fileID: 4809697924163556}
   - {fileID: 4082188635148886}
@@ -2342,4 +2342,18 @@ MonoBehaviour:
   Ai: {fileID: 11400000, guid: ee53000eb8caea6408a0e50dc603d908, type: 2}
   MoveSpeed: 5
   TurnSpeed: 180
-  PaintComponents: []
+  PaintComponents:
+  - {fileID: 23662515838966194}
+  - {fileID: 23977419550552142}
+  - {fileID: 23490097353773424}
+  - {fileID: 23545354144165982}
+  - {fileID: 23384825480063982}
+  - {fileID: 23491955634919070}
+  - {fileID: 23617416848110206}
+  - {fileID: 23111786129346562}
+  - {fileID: 23694799499616370}
+  - {fileID: 23831376424720842}
+  - {fileID: 23856214920257712}
+  - {fileID: 23564552718665218}
+  - {fileID: 23777257038069982}
+  - {fileID: 23783627990641304}

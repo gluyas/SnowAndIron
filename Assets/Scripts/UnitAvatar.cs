@@ -125,8 +125,6 @@ public class UnitAvatar : MonoBehaviour
 		_epBar = Instantiate(GuiComponents.GetEpBar ()).GetComponent<BarScript>();
 		
 		TeamColorPaint();
-		Utils.Print (_unit.Avatar.Ai.name);
-		//SendMessage("Play");
 		var avatarName = _unit.Avatar.Ai.name;
 
 		if (avatarName.Equals ("ArcZigZagAi")) 
