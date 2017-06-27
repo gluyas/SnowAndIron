@@ -13,7 +13,7 @@ public class UnitPlacer : MonoBehaviour {
 
 	public PreviewTile PreviewTile;
 
-//	public Image[] Bar;
+	public Image[] BackGroudImage;
 
 	/// <summary>
 	/// Key bindings to select the units in the array.
@@ -42,7 +42,7 @@ public class UnitPlacer : MonoBehaviour {
 		get { return Player.Units; }
 	}
 
-	private Image _c;
+	private Color _c;
 	private Transform _t;
 	private GameObject _preview;
 	private PreviewTile _previewTile;
@@ -60,15 +60,12 @@ public class UnitPlacer : MonoBehaviour {
 		_pathPreview = new List<PreviewTile>();
 		_selectedMirrored = Player.MirrorDefault;
 		_previewTile = Instantiate(PreviewTile, _t);
-		var color = Player.Color;
-		color.a = 0.7f;
-		_previewTile.Paint(color);
+		_c = Player.Color;
+		_c.a = 0.7f;
+		_previewTile.Paint(_c);
 		
 		selectedTile = 0;
 		maxTiles = 0;
-
-		_c = GetComponent<Image>();
-		_c.color = new Color ();
 	}
 
 
@@ -108,11 +105,16 @@ public class UnitPlacer : MonoBehaviour {
 				{
 					if (GameController.MakeUnit(Units[i], Player, _selectedPos, _selectedDir, _selectedMirrored))
 					{
+						BackGroudImage [i].color = new Color32 (205, 205, 205, 225);
 						SelectUnit(-1);
 					}
 				}
 				else 					// select another unit
 				{
+					for (int j = 0; j < UnitSelectionKeys.Length; j++) {
+						BackGroudImage [j].color = new Color32 (205, 205, 205, 225);
+					}
+					BackGroudImage [i].color =_c;
 					SelectUnit(i);
 					break;
 				}
