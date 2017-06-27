@@ -2365,12 +2365,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 1
   MaxEnergy: 5
-  inputSound: event:/Click
+  heavySound: event:/HeavyDeploy
+  medSound: event:/MediumDeploy
+  lightSound: event:/ScoutDeploy
   Ai: {fileID: 11400000, guid: c963efcafb4277d4795097aa0c15dbb1, type: 2}
   MoveSpeed: 6
   TurnSpeed: 220
   PaintComponents:
+  - {fileID: 23013392082926530}
+  - {fileID: 23666738006036570}
+  - {fileID: 23212245602660682}
+  - {fileID: 23082947307442282}
   - {fileID: 23423225069462446}
   - {fileID: 23021422627737816}
   - {fileID: 23714112437986532}
-  - {fileID: 23666738006036570}
+  - {fileID: 23307402678542658}
+  - {fileID: 23602289043017874}
+  - {fileID: 23350374113582466}
+  - {fileID: 23270790787041430}
+  - {fileID: 23830750555882390}
+  - {fileID: 23742450587387250}
+  - {fileID: 23819034138207062}
