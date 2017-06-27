@@ -35,7 +35,7 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 	{
 		if (Sync()) 
 		{
-			_animationTime += time / AttackTimeScale;
+			_animationTime += time / AttackTimeScale * Owner.MoveSpeed * 2;
 			Owner.Position = _startPos + _attackVector * AttackCurve.Evaluate(_animationTime);
 
 			if (_animationTime >= ImpactTime && _impactStage >= 0)	// impact effects!
