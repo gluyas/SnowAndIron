@@ -37,8 +37,12 @@ public class UIOverlay : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {      
-        roundNum = "" + gameController.RoundNumber.ToString();
+
+	void Update () {
+
+        
+        roundNum = "" + (gameController.NumberOfRounds- gameController.RoundNumber ).ToString();
+
         roundNumber.text = roundNum;
 
         p1objs = "" + p1.CapturedObjectives.ToString();

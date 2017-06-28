@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class GameController : MonoBehaviour
 {	
 	public WorldGenerator WorldGenerator;
+    public GameObject GameOverMenu;
 	public World World { get { return WorldGenerator.World; }}
 	
 	public Player[] Players = new Player[2];
@@ -14,6 +15,9 @@ public class GameController : MonoBehaviour
 
     public int MapSize = 20;
     public int NumberOfMaps = 1;
+    public int NumberOfRounds;
+
+    
 
 	public int RoundNumber { get { return _worldController != null ? _worldController.RoundNumber : 0; } }
 	private WorldController _worldController;
@@ -21,11 +25,14 @@ public class GameController : MonoBehaviour
 	public void DoTurn()
 	{
 		_worldController.DoTurn();
+        
+      
 	}
 	
 	private void Start()
 	{
 		_worldController = new WorldController(WorldGenerator.World);
+        GameOverMenu.SetActive(false);
 		_playerUnitPlaced = new Dictionary<Player, bool>();
 		foreach (var player in Players)
 		{
@@ -83,9 +90,26 @@ public class GameController : MonoBehaviour
 					_playerUnitPlaced[player] = false;
 				}
 			}
+            checkGameOver();
 			return true;
 		}
 	}
+
+    private void checkGameOver()
+    {
+
+        if (RoundNumber >= NumberOfRounds)
+        {
+    
+            GameOverMenu.SetActive(true);
+
+        }
+        
+
+
+
+
+    }
 	
 	/*
 	private void RenderWorld(World world)
