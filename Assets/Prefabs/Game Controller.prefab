@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1903776892835232}
+  m_IsPrefabParent: 1
+--- !u!1 &1903776892835232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4505405989176934}
+  - component: {fileID: 114012536703153494}
+  - component: {fileID: 114691465331872986}
+  - component: {fileID: 114839577809506152}
+  - component: {fileID: 114607501719684596}
+  m_Layer: 0
+  m_Name: Game Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4505405989176934
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1903776892835232}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114012536703153494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1903776892835232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a9a2bcb0cc48579a76e97c1d50859e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WorldGenerator: {fileID: 0}
+  GameOverMenu: {fileID: 0}
+  roundSound: event:/GameStart
+  Players:
+  - {fileID: 0}
+  - {fileID: 0}
+  MapSize: 20
+  NumberOfMaps: 1
+  NumberOfRounds: 0
+  red: {fileID: 0}
+  blue: {fileID: 0}
+  MaxTurnTime: 15
+  MinTurnTime: 2
+  TurnTimeDecayRate: 0.5
+--- !u!114 &114607501719684596
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1903776892835232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d30d5e7171601449954fa64b6fe4b21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114691465331872986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1903776892835232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1826c13f6047f4e4fa9f2e37474aa275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HpBar: {fileID: 1850365383253004, guid: cb79d2184d0d34918a2b81aad11e0837, type: 2}
+  EpBar: {fileID: 1385079502731410, guid: b578b9133e4624f59b88f10407a8d43c, type: 2}
+  EffectHeightOffset: 0
+  ExplosionEffect: {fileID: 0}
+  ImpactEffect: {fileID: 0}
+  DeployEffect: {fileID: 0}
+  DeployProjectile: {fileID: 0}
+  DeployProjectileOrigin: {x: 0, y: 0, z: 0}
+  DeployEntranceTime: 0.5
+  DeplotExitTime: 0.5
+  ExplosionMotion:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: NaN
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: NaN
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ExplosionMotionTimeScale: 1
+  AttackMotion:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: NaN
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: NaN
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  AttackMotionImpactTime: 0.75
+  AttackMotionTimeScale: 1
+  HitPrimaryColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  HitPrimaryTime: 0.04
+  HitSecondaryColor: {r: 1, g: 0, b: 0, a: 1}
+  HitSecondaryTime: 0.01
+--- !u!114 &114839577809506152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1903776892835232}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7650e7543bafbca47b15b1a1e8a34f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameController: {fileID: 114012536703153494}
+  p1: {fileID: 0}
+  p2: {fileID: 0}
+  roundNumber: {fileID: 0}
+  p1objectives: {fileID: 0}
+  p2objectives: {fileID: 0}
+  p1killed: {fileID: 0}
+  p2killed: {fileID: 0}
+  RoundSeconds: 0
+  RoundBar: {fileID: 0}
+  TimerBar: {fileID: 0}

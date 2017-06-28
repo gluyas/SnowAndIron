@@ -9,6 +9,8 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 	private int _impactStage = 0;
 	private int _attackerEnergy;
 	private int _defenderHealth;
+	private int _damage;
+	
 	[FMODUnity.EventRef]
 	public string chargeSound = "event:/Attack charge";
 	[FMODUnity.EventRef]
@@ -32,14 +34,18 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 		 var targetPos = defender.Position.ToVector3();
 		_startPos = attacker.Position.ToVector3();
 		_attackVector = (targetPos - _startPos) / 2;
+
+		_damage = damage;
 	}
 
 	bool _once;
 
 	public override bool ApplyAnimation(float time)
 	{
-		if (Sync()) 
+		if (Sync())
 		{
+			if (_damage == 0) return true;	// don't hit!
+			
 			if (!_once) {
 				
 				FMODUnity.RuntimeManager.PlayOneShot (chargeSound, new Vector3 (0, 0, 0));

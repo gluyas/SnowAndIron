@@ -133,7 +133,10 @@ namespace Model
 			var combatDirection = Position.GetApproximateDirectionTo(other.Position);
 			if (!combatDirection.HasValue) throw new Exception();	// could not face other unit - probably same pos
 			
-			if (this.Energy <= 0) return;	// skip combat
+			if (this.Energy <= 0) {// skip combat
+				Avatar.EnqueueAnimation(new CombatAnimation(this, other, 0));
+				return;	
+			}
 			
 			Move.Turn(_currentMove, Cross(combatDirection.Value)).Accept();	// bit gross, but should be fine
 			
