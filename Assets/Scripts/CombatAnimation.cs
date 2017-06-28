@@ -32,10 +32,17 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 		_attackVector = (targetPos - _startPos) / 2;
 	}
 
+	bool _once;
+
 	public override bool ApplyAnimation(float time)
 	{
 		if (Sync()) 
 		{
+			if (!_once) {
+				FMODUnity.RuntimeManager.PlayOneShot (attackSound, new Vector3 (0, 0, 0));
+				_once = true;
+			}
+
 			_animationTime += time / AttackTimeScale * Owner.MoveSpeed * 2;
 			Owner.Position = _startPos + _attackVector * AttackCurve.Evaluate(_animationTime);
 
@@ -43,7 +50,7 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 			{
 				if (_impactEffect == null)
 				{
-					FMODUnity.RuntimeManager.PlayOneShot (attackSound, new Vector3(0,0,0));
+					
 					_impactEffect = Object.Instantiate(GuiComponents.GetImpactEffect());
 					_impactEffect.transform.position = Owner.Position;
 					_impactEffect.transform.position += GuiComponents.GetEffectHeightOffset();

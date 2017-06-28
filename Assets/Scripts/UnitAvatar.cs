@@ -11,6 +11,8 @@ public class UnitAvatar : MonoBehaviour
 	public int MaxEnergy;
 	[FMODUnity.EventRef]
 	public string inSound;
+	[FMODUnity.EventRef]
+	public string moveSound;
 
 	public UnitAi Ai;
 	

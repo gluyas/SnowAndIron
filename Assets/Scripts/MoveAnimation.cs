@@ -6,7 +6,8 @@ public class MoveAnimation : IAnimation
 	// bleed values: as a factor of the unit's speed values
 	private const float RotationMovementBleed = 0.075f;	// when to start moving after rotating
 	private const float IdleAnimationBleed = 0.05f;		// when to stop the walk animation before reaching destination
-
+	[FMODUnity.EventRef]
+	public string moveSound;
 	// unity components
 	private UnitAvatar _avatar;
 
@@ -25,6 +26,7 @@ public class MoveAnimation : IAnimation
 		// TODO: implement energycost, advanced bar animation
 		_targetEnergy = unit.Energy;
 		_isStep = origin != destination;
+		moveSound = _avatar.moveSound;
 		Utils.Print (_isStep);
 	}
 
@@ -55,7 +57,7 @@ public class MoveAnimation : IAnimation
 
 				if (_isStep) 
 				{
-
+					FMODUnity.RuntimeManager.PlayOneShot (moveSound, new Vector3(0,0,0));
 				}
 				_avatar.UpdateEnergy(_targetEnergy);
 				return true;
