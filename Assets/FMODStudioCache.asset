@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: 114877935929323596}
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   EditorEvents:
   - {fileID: 114849522140071402}
   - {fileID: 114084782427472212}
@@ -29,9 +29,9 @@ MonoBehaviour:
   - {fileID: 114144466010959772}
   - {fileID: 114377108676929114}
   - {fileID: 114129197658432148}
-  MasterBankRef: {fileID: 114075383574610444}
+  MasterBankRef: {fileID: 114214626756198360}
   StringsBankRef: {fileID: 114877935929323596}
-  stringsBankWriteTime: 636342644460000000
+  stringsBankWriteTime: 636342620710000000
   cacheVersion: 2
 --- !u!114 &114010490763114968
 MonoBehaviour:
@@ -81,7 +81,7 @@ MonoBehaviour:
   Path: event:/Click
   guid: 600a6bcd81da2c4283318a976e27ae30
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -106,7 +106,7 @@ MonoBehaviour:
   FileSizes:
   - Name: 
     Value: 1308544
-  Exists: 1
+  Exists: 0
 --- !u!114 &114084782427472212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   Path: event:/GameStart
   guid: 185a8fce26d9e242b42c076c4db46903
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -142,7 +142,7 @@ MonoBehaviour:
   Path: event:/DoubleClick
   guid: 531f2d0d042fff40b86a388bf950e885
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -163,7 +163,7 @@ MonoBehaviour:
   Path: event:/Attack charge
   guid: dd37fb93d71be0409128604a94f4187e
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -184,7 +184,7 @@ MonoBehaviour:
   Path: event:/Attack destroy
   guid: 38358ea7f46c334fba4b406b9e32d6bb
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -256,7 +256,7 @@ MonoBehaviour:
   Path: event:/MediumDeploy
   guid: 6457341ba26b654bb3c01f3a8d3cafd8
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -281,6 +281,24 @@ MonoBehaviour:
   - Name: 
     Value: 1146
   Exists: 1
+--- !u!114 &114214626756198360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: /Users/Guest/Desktop/ArcaneRumble/Assets/Sound-Fmod/Desktop/Master Bank.bank
+  lastModified: 636342620710000000
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 1308544
+  Exists: 1
 --- !u!114 &114263285483452714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +313,7 @@ MonoBehaviour:
   Path: event:/ScoutMove
   guid: 92a92be124bbf74387ddd12f3b7e8fe3
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -331,7 +349,7 @@ MonoBehaviour:
   Path: event:/Attack impact
   guid: 44e38a44188328428fc910b63f0d91c3
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -352,7 +370,7 @@ MonoBehaviour:
   Path: event:/HeavyDeploy
   guid: 8355800b28109d4f962929ad901eb68e
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -373,7 +391,7 @@ MonoBehaviour:
   Path: event:/Ambience - DistantGunfire
   guid: 209befb39ef4944e8649f70fe8652084
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
@@ -412,7 +430,7 @@ MonoBehaviour:
   Path: event:/Ambience - Wind
   guid: 2a8067005a722d41a096ae659c002eb3
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -433,7 +451,7 @@ MonoBehaviour:
   Path: event:/ScoutDeploy
   guid: 9e6bd98565ac034f97bd906bcc807ea8
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -473,7 +491,7 @@ MonoBehaviour:
   Path: event:/MediumMove
   guid: dea5859bbf385c42b3535a3e89703d29
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -546,7 +564,7 @@ MonoBehaviour:
   Path: event:/HeavyMove
   guid: 100ef490a11b984f92ec5a58492ff127
   Banks:
-  - {fileID: 114075383574610444}
+  - {fileID: 114214626756198360}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -617,7 +635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Assets/Sound-Fmod/Desktop/Master Bank.strings.bank
-  lastModified: 636342644460000000
+  lastModified: 636342620710000000
   LoadResult: 0
   FileSizes:
   - Name: 
