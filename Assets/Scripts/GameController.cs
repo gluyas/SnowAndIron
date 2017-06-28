@@ -17,6 +17,10 @@ public class GameController : MonoBehaviour
     public int NumberOfMaps = 1;
     public int NumberOfRounds;
 
+	public GameObject red;
+	public GameObject blue;
+
+	private bool _gameOver;
     
 
 	public int RoundNumber { get { return _worldController != null ? _worldController.RoundNumber : 0; } }
@@ -41,6 +45,7 @@ public class GameController : MonoBehaviour
 		{
 			_playerUnitPlaced[player] = false;
 		}
+		_gameOver = false;
 	}
 
 	private void Update()
@@ -61,7 +66,7 @@ public class GameController : MonoBehaviour
 	/// <returns>true if the operation was successful; false if not</returns>
 	public bool MakeUnit(GameObject unitPrefab, Player owner, TileVector pos, CardinalDirection dir, bool mirrored)
 	{
-		if (_playerUnitPlaced[owner]) return false;	// stop players placing more than one unit
+		if (_gameOver || _playerUnitPlaced[owner]) return false;	// stop players placing more than one unit
 		
 		var avatar = Instantiate(unitPrefab).GetComponent<UnitAvatar>();			
 		var unit = avatar.CreateUnit(owner, pos, dir, mirrored);
@@ -100,15 +105,34 @@ public class GameController : MonoBehaviour
 
         if (RoundNumber >= NumberOfRounds)
         {
-    
+			_gameOver = true;
             GameOverMenu.SetActive(true);
 
+			int p1Objectives = Players [0].CapturedObjectives;
+			int p2Objectives = Players [1].CapturedObjectives;
+			int p1killed = Players [0].DestroyedUnits;
+			int p2killed = Players [1].DestroyedUnits;
+
+			if (p1Objectives > p2Objectives) {
+
+				red.SetActive (false);
+				blue.SetActive (true);
+
+			} else if (p2Objectives > p1Objectives) {
+
+				blue.SetActive (false);
+				red.SetActive (true);
+
+			} else { // if tie
+				if (p1killed > p2killed) {
+					red.SetActive (false);
+					blue.SetActive (true);
+				} else {
+					blue.SetActive (false);
+					red.SetActive (true);
+				}
+			}
         }
-        
-
-
-
-
     }
 	
 	/*
