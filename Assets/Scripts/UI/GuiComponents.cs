@@ -7,7 +7,7 @@ public class GuiComponents : MonoBehaviour {
 	private static GuiComponents _instance;
 
 	// Use this for initialization
-	private void OnValidate() {
+	private void Start() {
 		_instance = this;
 	}
 	
