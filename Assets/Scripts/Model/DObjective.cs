@@ -7,15 +7,22 @@ public class DObjective : MonoBehaviour {
     public GameObject CurrentObjective;
     private Hex objectiveHex;
     private Renderer[] orenderer;
+    public Animator anim;
 
     public void setHex (Hex hex)
     {
         objectiveHex = hex;
     }
-	void Start () {
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
+    void Start () {
         CurrentObjective = this.gameObject;
         orenderer = CurrentObjective.GetComponentsInChildren<Renderer>();
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -26,5 +33,16 @@ public class DObjective : MonoBehaviour {
         //orenderer.material.color = objectiveHex.Owner.Color;
         
 
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("inside");    
+        anim.SetBool("IsOccupied", true);
+        Debug.Log(anim.GetParameter(0).name);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log("Outside");
+        anim.SetBool("IsOccupied", false);
     }
 }
