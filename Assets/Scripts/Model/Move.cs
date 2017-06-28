@@ -70,7 +70,8 @@ namespace Model
 		/// <returns></returns>
 		public static Move Turn(TurnPlan owner, RelativeDirection direction)
 		{
-			return new Move(owner, direction, owner.Unit.Position, 1);
+			var cost = direction == RelativeDirection.Forward ? 0 : 1;
+			return new Move(owner, direction, owner.Unit.Position, cost);
 		}
 
 		/// <summary>
