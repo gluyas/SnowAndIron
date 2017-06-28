@@ -154,7 +154,7 @@ public class UnitPlacer : MonoBehaviour {
 			
 			var directionHint = SelectedAvatar().Ai.PreviewDirectionHint();
 			RotateDir(_selectedMirrored ? directionHint.Mirror() : directionHint);
-			FMODUnity.RuntimeManager.PlayOneShot (selectSound, new Vector3(0,0,0));
+			//FMODUnity.RuntimeManager.PlayOneShot (selectSound, new Vector3(0,0,0));
 		}
 		UpdatePathPreview();
 	}

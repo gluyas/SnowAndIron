@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Model
 {
@@ -11,7 +12,8 @@ namespace Model
 		
 		private World _world;
 		private ICollection<Unit> _units;
-
+		[FMODUnity.EventRef]
+		public string roundSound = "event:/GameStart";
 		public WorldController(World world)
 		{
 			_world = world;
@@ -185,7 +187,6 @@ namespace Model
 				DebugLogFrame();
 				#endif
 			}
-			
 			RoundNumber++;
 		}
 
