@@ -179,7 +179,7 @@ public class UnitPlacer : MonoBehaviour {
 				var hex = GameController.World[step.Pos];
 				if (hex == null || hex.Impassable)
 				{
-					color = Color.red;
+					color = Color.gray;
 				}
 					
 				var highlight = Instantiate(PreviewTile, _t, true);
@@ -224,12 +224,14 @@ public class UnitPlacer : MonoBehaviour {
 		}
 		this.transform.position = Player.PlayerPlacables[selectedTile].ToVector3 ();
 		_selectedPos = Player.PlayerPlacables [selectedTile];
+		UpdatePathPreview();
 	}
 
 	private void RotateDir(RelativeDirection direction)
 	{
 		_selectedDir = _selectedDir.Turn(direction);
 		_t.rotation = _selectedDir.GetBearingRotation();
+		FMODUnity.RuntimeManager.PlayOneShot (selectSound, new Vector3(0,0,0));
 		UpdatePathPreview();
 	}
 	
