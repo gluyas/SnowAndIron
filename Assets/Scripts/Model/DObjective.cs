@@ -28,7 +28,16 @@ public class DObjective : MonoBehaviour {
 	void Update () {
         if(objectiveHex.Objective.controllingPlayer != null)
         {
-            orenderer[9].material.color = objectiveHex.Objective.controllingPlayer.Color;
+            orenderer[0].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[1].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[2].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[3].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[4].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[5].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[6].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[7].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[8].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[9].material.color = objectiveHex.Objective.controllingPlayer.Color;
         }
         //orenderer.material.color = objectiveHex.Owner.Color;
         
