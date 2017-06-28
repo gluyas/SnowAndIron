@@ -225,6 +225,7 @@ public class UnitPlacer : MonoBehaviour {
 
 	private void RotateDir(RelativeDirection direction)
 	{
+		FMODUnity.RuntimeManager.PlayOneShot (selectSound, new Vector3(0,0,0));
 		_selectedDir = _selectedDir.Turn(direction);
 		_t.rotation = _selectedDir.GetBearingRotation();
 		UpdatePathPreview();
