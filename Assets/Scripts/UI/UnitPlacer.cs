@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Model;
+using UnityEngine.UI;
 
 public class UnitPlacer : MonoBehaviour {
 
@@ -11,6 +12,8 @@ public class UnitPlacer : MonoBehaviour {
 	public int maxTiles;
 
 	public PreviewTile PreviewTile;
+
+	public Image[] BackGroudImage;
 
 	/// <summary>
 	/// Key bindings to select the units in the array.
@@ -38,7 +41,8 @@ public class UnitPlacer : MonoBehaviour {
 	{
 		get { return Player.Units; }
 	}
-	
+
+	private Color _c;
 	private Transform _t;
 	private GameObject _preview;
 	private PreviewTile _previewTile;
@@ -49,6 +53,8 @@ public class UnitPlacer : MonoBehaviour {
 	private CardinalDirection _selectedDir 		= CardinalDirection.North;
 	private bool _selectedMirrored;
 
+
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -56,10 +62,9 @@ public class UnitPlacer : MonoBehaviour {
 		_pathPreview = new List<PreviewTile>();
 		_selectedMirrored = Player.MirrorDefault;
 		_previewTile = Instantiate(PreviewTile, _t);
-		var color = Player.Color;
-		color.a = 0.7f;
-		_previewTile.Paint(color);
-		
+		_c = Player.Color;
+		_c.a = 0.7f;
+		_previewTile.Paint(_c);		
 		selectedTile = 0;
 		maxTiles = 0;
 	}
@@ -101,16 +106,23 @@ public class UnitPlacer : MonoBehaviour {
 				{
 					if (GameController.MakeUnit(Units[i], Player, _selectedPos, _selectedDir, _selectedMirrored))
 					{
+						BackGroudImage [i].color = new Color32 (205, 205, 205, 225);
 						SelectUnit(-1);
 					}
 				}
 				else 					// select another unit
 				{
+					for (int j = 0; j < UnitSelectionKeys.Length; j++) {
+						BackGroudImage [j].color = new Color32 (205, 205, 205, 225);
+					}
+					BackGroudImage [i].color =_c;
 					SelectUnit(i);
 					break;
 				}
 			}
+
 		}
+
 	}
 
 	private void SelectUnit(int index) 
@@ -136,6 +148,7 @@ public class UnitPlacer : MonoBehaviour {
 			
 			var directionHint = SelectedAvatar().Ai.PreviewDirectionHint();
 			RotateDir(_selectedMirrored ? directionHint.Mirror() : directionHint);
+			//_preview.GetComponent<UnitAvatar>().GetComponent<FMODUnity.StudioEventEmitter>().Play();
 		}
 		UpdatePathPreview();
 	}
@@ -143,7 +156,7 @@ public class UnitPlacer : MonoBehaviour {
 	private void UpdatePathPreview()
 	{
 		for (var i = _pathPreview.Count - 1; i >= 0; i--)		// clean up old preview
-		{
+		{	
 			Destroy(_pathPreview[i].gameObject);
 			_pathPreview.RemoveAt(i);
 		}
