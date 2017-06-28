@@ -6,6 +6,8 @@ public class SelectOnInput : MonoBehaviour {
 
 	public EventSystem eventSystem;
 	public GameObject selectedObject;
+	public GameObject mainMenuPanel;
+	public GameObject OptionsPanel;
 
 	private bool buttonSelected;
 
@@ -17,15 +19,27 @@ public class SelectOnInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (Input.GetAxisRaw ("Vertical") != 0 && buttonSelected == false) 
-		{
+		SelectButton ();
+	}
+	void SelectButton(){
+			if (Input.GetAxisRaw ("Vertical") != 0 && buttonSelected == false) 
+			{
+	
 			eventSystem.SetSelectedGameObject(selectedObject);
 			buttonSelected = true;
-		}
+			}
+
+		
 	}
 
-	private void OnDisable()
+	void OnEnable()
 	{
-		buttonSelected = false;
+		Debug.Log("I am Onenabled: "+buttonSelected);
 	}
+//
+//	void OnDisable()
+//	{
+//		buttonSelected = false;
+//		Debug.Log ("I am OnDisable "+buttonSelected);
+//	}
 }
