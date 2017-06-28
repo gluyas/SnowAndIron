@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4339710561187942}
   - component: {fileID: 95898101180233916}
   - component: {fileID: 114930297950406606}
+  - component: {fileID: 136840076315123858}
   m_Layer: 0
   m_Name: heavy
   m_TagString: Untagged
@@ -292,3 +293,16 @@ MonoBehaviour:
   PaintComponents:
   - {fileID: 23086279376578544}
   - {fileID: 23555971594516080}
+--- !u!136 &136840076315123858
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1267415537965952}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 3.3
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 4, z: 0}

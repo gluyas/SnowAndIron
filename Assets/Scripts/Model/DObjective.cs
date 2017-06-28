@@ -7,7 +7,7 @@ public class DObjective : MonoBehaviour {
     public GameObject CurrentObjective;
     private Hex objectiveHex;
     private Renderer[] orenderer;
-    public Animator anim;
+    Animator anim;
 
     public void setHex (Hex hex)
     {
@@ -28,7 +28,17 @@ public class DObjective : MonoBehaviour {
 	void Update () {
         if(objectiveHex.Objective.controllingPlayer != null)
         {
-            orenderer[9].material.color = objectiveHex.Objective.controllingPlayer.Color;
+            orenderer[0].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[1].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[2].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[3].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[4].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[5].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[6].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[7].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[8].material.color = objectiveHex.Objective.controllingPlayer.Color;
+			orenderer[9].material.color = objectiveHex.Objective.controllingPlayer.Color;
+
         }
         //orenderer.material.color = objectiveHex.Owner.Color;
         
@@ -36,13 +46,10 @@ public class DObjective : MonoBehaviour {
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("inside");    
         anim.SetBool("IsOccupied", true);
-        Debug.Log(anim.GetParameter(0).name);
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Outside");
         anim.SetBool("IsOccupied", false);
     }
 }
