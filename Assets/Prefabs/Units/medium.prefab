@@ -2339,7 +2339,7 @@ MonoBehaviour:
   MaxEnergy: 3
   inSound: event:/MediumDeploy
   moveSound: event:/MediumMove
-  Ai: {fileID: 11400000, guid: ee53000eb8caea6408a0e50dc603d908, type: 2}
+  Ai: {fileID: 11400000, guid: 3c3a284c4fc062e4a808ef10c1e262b6, type: 2}
   MoveSpeed: 5
   TurnSpeed: 180
   PaintComponents:
