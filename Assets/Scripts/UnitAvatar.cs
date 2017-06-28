@@ -10,9 +10,9 @@ public class UnitAvatar : MonoBehaviour
 	public int MaxHealth;
 	public int MaxEnergy;
 	[FMODUnity.EventRef]
-	public string heavySound = "event:/HeavyDeploy";
-	public string medSound = "event:/MediumDeploy";
-	public string lightSound = "event:/ScoutDeploy";
+	public string inSound;
+	[FMODUnity.EventRef]
+	public string moveSound;
 
 	public UnitAi Ai;
 	
@@ -125,21 +125,7 @@ public class UnitAvatar : MonoBehaviour
 		_epBar = Instantiate(GuiComponents.GetEpBar ()).GetComponent<BarScript>();
 		
 		TeamColorPaint();
-		var avatarName = _unit.Avatar.Ai.name;
-
-		if (avatarName.Equals ("ArcZigZagAi")) 
-		{
-			FMODUnity.RuntimeManager.PlayOneShot (heavySound, Position);
-		}
-		else if (avatarName.Equals ("Linear")) 
-		{
-			FMODUnity.RuntimeManager.PlayOneShot (lightSound, Position);
-		}
-		else if (avatarName.Equals ("BasicZigZag")) 
-		{
-			FMODUnity.RuntimeManager.PlayOneShot (medSound, Position);
-		}
-		//FMODUnity.RuntimeManager.PlayOneShot (sound, Position);
+		//FMODUnity.RuntimeManager.PlayOneShot (inSound, Position);
 	}
 
 	public void EnqueueAnimation(IAnimation anim)

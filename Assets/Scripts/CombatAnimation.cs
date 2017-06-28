@@ -9,7 +9,10 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 	private int _impactStage = 0;
 	private int _attackerEnergy;
 	private int _defenderHealth;
-
+	[FMODUnity.EventRef]
+	public string chargeSound = "event:/Attack charge";
+	[FMODUnity.EventRef]
+	public string impactSound = "event:/Attack impact";
 	private Vector3 _attackVector;
 	private Vector3 _startPos;
 
@@ -31,10 +34,19 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 		_attackVector = (targetPos - _startPos) / 2;
 	}
 
+	bool _once;
+
 	public override bool ApplyAnimation(float time)
 	{
 		if (Sync()) 
 		{
+			if (!_once) {
+				
+				FMODUnity.RuntimeManager.PlayOneShot (chargeSound, new Vector3 (0, 0, 0));
+
+				_once = true;
+			}
+
 			_animationTime += time / AttackTimeScale * Owner.MoveSpeed * 2;
 			Owner.Position = _startPos + _attackVector * AttackCurve.Evaluate(_animationTime);
 
@@ -42,6 +54,7 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 			{
 				if (_impactEffect == null)
 				{
+					FMODUnity.RuntimeManager.PlayOneShot (impactSound, new Vector3 (0, 0, 0));
 					_impactEffect = Object.Instantiate(GuiComponents.GetImpactEffect());
 					_impactEffect.transform.position = Owner.Position;
 					_impactEffect.transform.position += GuiComponents.GetEffectHeightOffset();
@@ -51,15 +64,20 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 				float flashTime = 0;
 				switch (_impactStage)
 				{
-					case 0:
+				case -1:
+					break;
+				case 0:
+					Utils.Print ("1");
 						color = GuiComponents.GetHitPrimaryColor();
 						flashTime = GuiComponents.GetHitPrimaryTime();
 						break;
 					case 1:
+					Utils.Print ("2");
 						color = GuiComponents.GetHitSecondaryColor();
 						flashTime = GuiComponents.GetHitSecondaryTime();
 						break;
 					default:
+					Utils.Print ("3");
 						Target.ResetPaint();
 						Target.Scale = 1;
 						Owner.UpdateEnergy(_attackerEnergy);
@@ -69,6 +87,7 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 				}
 				if (_impactStage >= 0)
 				{
+					Utils.Print ("4");
 					Target.Paint(color);
 					Target.Scale = 1.1f;
 

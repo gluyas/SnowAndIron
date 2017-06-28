@@ -51,13 +51,19 @@ public class GuiComponents : MonoBehaviour {
 	}
 
 	public GameObject DeployProjectile;
-	public static GameObject GEtDeployProjectile()
+	public static GameObject GetDeployProjectile()
 	{
 		return _instance.DeployProjectile;
 	}
 	
 	// DEPLOY ANIMATION
 
+	public Vector3 DeployProjectileOrigin;
+	public static Vector3 GetDeployProjectileOrigin()
+	{
+		return _instance.DeployProjectileOrigin;
+	}
+	
 	public float DeployEntranceTime = 0.5f;
 	public static float GetDeployEntranceTime()
 	{

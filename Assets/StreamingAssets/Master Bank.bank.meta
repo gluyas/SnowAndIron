@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 3ce337b175463424d81d9215f2c8cf1a
 timeCreated: 1498540395
+=======
+guid: ff38e825ecf1a4a6f95707b82161559e
+timeCreated: 1498616327
+>>>>>>> origin/Sound
 licenseType: Free
 DefaultImporter:
   userData: 

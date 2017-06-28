@@ -10,6 +10,9 @@ public class UnitPlacer : MonoBehaviour {
 	private MeshRenderer[] _renderers;
 	public int selectedTile;
 	public int maxTiles;
+	[FMODUnity.EventRef]
+	public string confirmSound = "event:/DoubleClick";
+	public string selectSound = "event:/Click";
 
 	public PreviewTile PreviewTile;
 
@@ -107,6 +110,7 @@ public class UnitPlacer : MonoBehaviour {
 					if (GameController.MakeUnit(Units[i], Player, _selectedPos, _selectedDir, _selectedMirrored))
 					{
 						BackGroudImage [i].color = new Color32 (205, 205, 205, 225);
+						FMODUnity.RuntimeManager.PlayOneShot (confirmSound, new Vector3(0,0,0));
 						SelectUnit(-1);
 					}
 				}
@@ -135,7 +139,6 @@ public class UnitPlacer : MonoBehaviour {
 		
 		_selectedUnit = index;
 		if (_preview != null) Destroy(_preview);
-		
 		if (index >= 0)
 		{
 			_preview = Instantiate(Units[index], _t, false);
@@ -148,7 +151,7 @@ public class UnitPlacer : MonoBehaviour {
 			
 			var directionHint = SelectedAvatar().Ai.PreviewDirectionHint();
 			RotateDir(_selectedMirrored ? directionHint.Mirror() : directionHint);
-			//_preview.GetComponent<UnitAvatar>().GetComponent<FMODUnity.StudioEventEmitter>().Play();
+			FMODUnity.RuntimeManager.PlayOneShot (selectSound, new Vector3(0,0,0));
 		}
 		UpdatePathPreview();
 	}
@@ -200,6 +203,7 @@ public class UnitPlacer : MonoBehaviour {
 	// }
 		
 	private void DirectionSelected(CardinalDirection direction) {
+		FMODUnity.RuntimeManager.PlayOneShot (selectSound, new Vector3(0,0,0));
 		if (direction == CardinalDirection.North) {
 			if (selectedTile == 0) {
 				selectedTile = maxTiles;

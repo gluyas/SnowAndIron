@@ -670,7 +670,7 @@ GameObject:
   - component: {fileID: 4002773096508390}
   - component: {fileID: 95167136650997846}
   - component: {fileID: 114725507019597516}
-  - component: {fileID: 114352830005579258}
+  - component: {fileID: 114571213626625066}
   m_Layer: 0
   m_Name: light-linear
   m_TagString: Untagged
@@ -2330,7 +2330,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114352830005579258
+--- !u!114 &114571213626625066
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2365,24 +2365,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 1
   MaxEnergy: 5
-  heavySound: event:/HeavyDeploy
-  medSound: event:/MediumDeploy
-  lightSound: event:/ScoutDeploy
+  inSound: event:/ScoutDeploy
+  moveSound: event:/ScoutMove
   Ai: {fileID: 11400000, guid: c963efcafb4277d4795097aa0c15dbb1, type: 2}
   MoveSpeed: 6
   TurnSpeed: 220
   PaintComponents:
-  - {fileID: 23013392082926530}
-  - {fileID: 23666738006036570}
-  - {fileID: 23212245602660682}
-  - {fileID: 23082947307442282}
   - {fileID: 23423225069462446}
   - {fileID: 23021422627737816}
   - {fileID: 23714112437986532}
-  - {fileID: 23307402678542658}
-  - {fileID: 23602289043017874}
-  - {fileID: 23350374113582466}
-  - {fileID: 23270790787041430}
-  - {fileID: 23830750555882390}
-  - {fileID: 23742450587387250}
-  - {fileID: 23819034138207062}
+  - {fileID: 23666738006036570}
