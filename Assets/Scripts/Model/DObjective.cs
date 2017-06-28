@@ -7,7 +7,7 @@ public class DObjective : MonoBehaviour {
     public GameObject CurrentObjective;
     private Hex objectiveHex;
     private Renderer[] orenderer;
-    public Animator anim;
+    Animator anim;
 
     public void setHex (Hex hex)
     {
@@ -36,13 +36,10 @@ public class DObjective : MonoBehaviour {
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("inside");    
         anim.SetBool("IsOccupied", true);
-        Debug.Log(anim.GetParameter(0).name);
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Outside");
         anim.SetBool("IsOccupied", false);
     }
 }

@@ -671,6 +671,7 @@ GameObject:
   - component: {fileID: 95167136650997846}
   - component: {fileID: 114725507019597516}
   - component: {fileID: 114352830005579258}
+  - component: {fileID: 136319039615820732}
   m_Layer: 0
   m_Name: light-linear
   m_TagString: Untagged
@@ -2386,3 +2387,16 @@ MonoBehaviour:
   - {fileID: 23830750555882390}
   - {fileID: 23742450587387250}
   - {fileID: 23819034138207062}
+--- !u!136 &136319039615820732
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1746278308672746}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 2.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
