@@ -66,6 +66,8 @@ public class GameController : MonoBehaviour
 			avatar.SetUnit(unit);
 			_playerUnitPlaced[owner] = true;	// set player as placed a unit
 			
+			avatar.EnqueueAnimation(new DeployAnimation(avatar));
+			
 			var allPlaced = true;				// check if all players have placed a unit
 			foreach (var placed in _playerUnitPlaced.Values)
 			{
@@ -83,6 +85,7 @@ public class GameController : MonoBehaviour
 					_playerUnitPlaced[player] = false;
 				}
 			}
+			
 			return true;
 		}
 	}
