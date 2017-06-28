@@ -9,7 +9,8 @@ public class GameController : MonoBehaviour
 	public WorldGenerator WorldGenerator;
     public GameObject GameOverMenu;
 	public World World { get { return WorldGenerator.World; }}
-	
+	[FMODUnity.EventRef]
+	public string roundSound = "event:/GameStart";
 	public Player[] Players = new Player[2];
 	private Dictionary<Player, bool> _playerUnitPlaced; // TODO: refactor resource management into Player class
 
@@ -46,6 +47,7 @@ public class GameController : MonoBehaviour
 
 	private void Update()
 	{
+		if (_gameOver) return;
 		#if DEBUG
 		if (Input.GetKeyDown(KeyCode.BackQuote)) DoTurn();
 		#endif
@@ -56,6 +58,7 @@ public class GameController : MonoBehaviour
 	public void DoTurn()
 	{
 		_worldController.DoTurn();
+		FMODUnity.RuntimeManager.PlayOneShot (roundSound, new Vector3 (0, 0, 0));
 		checkGameOver();
 
 		if (!_gameOver)
