@@ -395,6 +395,6 @@ namespace Model
 					throw new ArgumentOutOfRangeException();
 			}
 		}
-	}
 #endif
+	}
 }

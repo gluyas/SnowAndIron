@@ -1,3 +1,5 @@
+#if DEBUG
+
 using System;
 using Model;
 using NUnit.Framework;
@@ -111,3 +113,5 @@ namespace Testing
 		}
 	}
 }
+
+#endif

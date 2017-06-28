@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿#if DEBUG
+
+using System.Text;
 using NUnit.Framework;
 using Model;
 using Cd = Model.CardinalDirection;
@@ -57,3 +59,5 @@ namespace Testing
 		}
 	}
 }
+
+#endif
