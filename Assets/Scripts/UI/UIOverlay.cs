@@ -28,12 +28,9 @@ public class UIOverlay : MonoBehaviour {
 	public Image TimerBar;
 
 	private int currentRound;	//current round
-	private float sec;	//current sec
-
 
     // Use this for initialization
     void Start () {
-		sec = 0.01f;
 		totalRounds = gameController.NumberOfRounds;
 	}
 	
@@ -59,20 +56,11 @@ public class UIOverlay : MonoBehaviour {
         p2killed.text = p2kill;
 
 		Round ();
-		RoundTimer ();
-
+		TimerBar.fillAmount = gameController.ElapsedTime / gameController.CurrentTurnTime;
     }
 
 	void Round(){
 		currentRound = gameController.RoundNumber;
 		RoundBar.fillAmount = (float)(currentRound) / totalRounds;
 	}
-
-	void RoundTimer(){
-		if (0 < sec && sec <= RoundSeconds) {
-			sec += Time.deltaTime;
-			TimerBar.fillAmount = (float)sec / RoundSeconds;
-		}
-	}
-
 }

@@ -17,23 +17,23 @@ public class GameController : MonoBehaviour
     public int NumberOfMaps = 1;
     public int NumberOfRounds;
 
-    
+	public GameObject red;
+	public GameObject blue;
 
+	private bool _gameOver;
+    
+	public float MaxTurnTime = 15;
+	public float MinTurnTime = 2;
+	public float TurnTimeDecayRate = 0.5f;
+	public float ElapsedTime { get; private set; }
+	public float CurrentTurnTime { get; private set; }
+ 
 	public int RoundNumber { get { return _worldController != null ? _worldController.RoundNumber : 0; } }
 	private WorldController _worldController;
-
-	public void DoTurn()
-	{
-		_worldController.DoTurn();
-		checkGameOver();
-		foreach (var player in Players)
-		{
-			_playerUnitPlaced[player] = false;
-		}
-	}
 	
 	private void Start()
 	{
+		CurrentTurnTime = MaxTurnTime;
 		_worldController = new WorldController(WorldGenerator.World);
         GameOverMenu.SetActive(false);
 		_playerUnitPlaced = new Dictionary<Player, bool>();
@@ -41,11 +41,36 @@ public class GameController : MonoBehaviour
 		{
 			_playerUnitPlaced[player] = false;
 		}
+		_gameOver = false;
 	}
 
 	private void Update()
 	{
+		#if DEBUG
 		if (Input.GetKeyDown(KeyCode.BackQuote)) DoTurn();
+		#endif
+		ElapsedTime += Time.deltaTime;
+		if (ElapsedTime >= CurrentTurnTime) DoTurn();
+	}
+	
+	public void DoTurn()
+	{
+		_worldController.DoTurn();
+		checkGameOver();
+
+		if (!_gameOver)
+		{
+			ElapsedTime = 0;
+			CurrentTurnTime *= TurnTimeDecayRate;
+			if (CurrentTurnTime < MinTurnTime) CurrentTurnTime = MinTurnTime;
+			
+			Debug.Log(CurrentTurnTime);
+			
+			foreach (var player in Players)
+			{
+				_playerUnitPlaced[player] = false;
+			}
+		}
 	}
 
 	/// <summary>
@@ -61,7 +86,7 @@ public class GameController : MonoBehaviour
 	/// <returns>true if the operation was successful; false if not</returns>
 	public bool MakeUnit(GameObject unitPrefab, Player owner, TileVector pos, CardinalDirection dir, bool mirrored)
 	{
-		if (_playerUnitPlaced[owner]) return false;	// stop players placing more than one unit
+		if (_gameOver || _playerUnitPlaced[owner]) return false;	// stop players placing more than one unit
 		
 		var avatar = Instantiate(unitPrefab).GetComponent<UnitAvatar>();			
 		var unit = avatar.CreateUnit(owner, pos, dir, mirrored);
@@ -97,18 +122,36 @@ public class GameController : MonoBehaviour
 
     private void checkGameOver()
     {
-
         if (RoundNumber >= NumberOfRounds)
         {
-    
+			_gameOver = true;
             GameOverMenu.SetActive(true);
 
+			int p1Objectives = Players [0].CapturedObjectives;
+			int p2Objectives = Players [1].CapturedObjectives;
+			int p1killed = Players [0].DestroyedUnits;
+			int p2killed = Players [1].DestroyedUnits;
+
+			if (p1Objectives > p2Objectives) {
+
+				red.SetActive (false);
+				blue.SetActive (true);
+
+			} else if (p2Objectives > p1Objectives) {
+
+				blue.SetActive (false);
+				red.SetActive (true);
+
+			} else { // if tie
+				if (p1killed > p2killed) {
+					red.SetActive (false);
+					blue.SetActive (true);
+				} else {
+					blue.SetActive (false);
+					red.SetActive (true);
+				}
+			}
         }
-        
-
-
-
-
     }
 	
 	/*

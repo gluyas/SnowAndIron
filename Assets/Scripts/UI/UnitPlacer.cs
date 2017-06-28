@@ -29,16 +29,18 @@ public class UnitPlacer : MonoBehaviour {
 	};
 
 	public KeyCode MoveNorthKey 				= KeyCode.W; 
-	public KeyCode MoveNortheastKey				= KeyCode.E; 
+	public KeyCode MoveNortheastKey				= KeyCode.None; 
 	public KeyCode MoveSoutheastKey				= KeyCode.D; 	
 	public KeyCode MoveSouthKey					= KeyCode.S; 
 	public KeyCode MoveSouthwestKey				= KeyCode.A; 
-	public KeyCode MoveNorthwestKey				= KeyCode.Q; 
+	public KeyCode MoveNorthwestKey				= KeyCode.None; 
 	
 	public KeyCode RotateAnticlockwiseKey		= KeyCode.Z;
 	public KeyCode RotateClockwiseKey			= KeyCode.X;
 	
-	public KeyCode MirrorToggleKey				= KeyCode.C;
+	public KeyCode MirrorToggleKey				= KeyCode.Q;
+
+	public KeyCode DeployKey					= KeyCode.E;
 
 	private GameObject[] Units	// shorthand alias
 	{
@@ -99,34 +101,35 @@ public class UnitPlacer : MonoBehaviour {
 
 		if (Input.GetKeyDown(MirrorToggleKey)) 			ToggleMirror();
 
+		if (Input.GetKeyDown (DeployKey))				PlaceUnit();
+
 
 		// UNIT SELECTION / PLACEMENT
 		for (var i = 0; i < UnitSelectionKeys.Length; i++)
 		{
 			if (Input.GetKeyDown(UnitSelectionKeys[i]))
-			{	
-				if (_selectedUnit == i)	// place unit on double tap of selection key
-				{
-					if (GameController.MakeUnit(Units[i], Player, _selectedPos, _selectedDir, _selectedMirrored))
-					{
-						BackGroudImage [i].color = new Color32 (205, 205, 205, 225);
-						FMODUnity.RuntimeManager.PlayOneShot (confirmSound, new Vector3(0,0,0));
-						SelectUnit(-1);
-					}
+			{
+				for (int j = 0; j < UnitSelectionKeys.Length; j++) {
+					BackGroudImage [j].color = new Color32 (205, 205, 205, 225);
 				}
-				else 					// select another unit
-				{
-					for (int j = 0; j < UnitSelectionKeys.Length; j++) {
-						BackGroudImage [j].color = new Color32 (205, 205, 205, 225);
-					}
-					BackGroudImage [i].color =_c;
-					SelectUnit(i);
-					break;
-				}
+				BackGroudImage [i].color =_c;
+				SelectUnit(i);
+				break;
 			}
 
 		}
 
+	}
+
+	private void PlaceUnit() {
+		if (_selectedUnit <= -1) return;
+
+		if (GameController.MakeUnit(Units[_selectedUnit], Player, _selectedPos, _selectedDir, _selectedMirrored))
+		{
+			BackGroudImage [_selectedUnit].color = new Color32 (205, 205, 205, 225);
+			FMODUnity.RuntimeManager.PlayOneShot (confirmSound, new Vector3(0,0,0));
+			SelectUnit(-1);
+		}
 	}
 
 	private void SelectUnit(int index) 
