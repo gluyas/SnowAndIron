@@ -22,22 +22,18 @@ public class GameController : MonoBehaviour
 
 	private bool _gameOver;
     
-
+	public float MaxTurnTime = 15;
+	public float MinTurnTime = 2;
+	public float TurnTimeDecayRate = 0.5f;
+	public float ElapsedTime { get; private set; }
+	public float CurrentTurnTime { get; private set; }
+ 
 	public int RoundNumber { get { return _worldController != null ? _worldController.RoundNumber : 0; } }
 	private WorldController _worldController;
-
-	public void DoTurn()
-	{
-		_worldController.DoTurn();
-		checkGameOver();
-		foreach (var player in Players)
-		{
-			_playerUnitPlaced[player] = false;
-		}
-	}
 	
 	private void Start()
 	{
+		CurrentTurnTime = MaxTurnTime;
 		_worldController = new WorldController(WorldGenerator.World);
         GameOverMenu.SetActive(false);
 		_playerUnitPlaced = new Dictionary<Player, bool>();
@@ -50,7 +46,31 @@ public class GameController : MonoBehaviour
 
 	private void Update()
 	{
+		#if DEBUG
 		if (Input.GetKeyDown(KeyCode.BackQuote)) DoTurn();
+		#endif
+		ElapsedTime += Time.deltaTime;
+		if (ElapsedTime >= CurrentTurnTime) DoTurn();
+	}
+	
+	public void DoTurn()
+	{
+		_worldController.DoTurn();
+		checkGameOver();
+
+		if (!_gameOver)
+		{
+			ElapsedTime = 0;
+			CurrentTurnTime *= TurnTimeDecayRate;
+			if (CurrentTurnTime < MinTurnTime) CurrentTurnTime = MinTurnTime;
+			
+			Debug.Log(CurrentTurnTime);
+			
+			foreach (var player in Players)
+			{
+				_playerUnitPlaced[player] = false;
+			}
+		}
 	}
 
 	/// <summary>
@@ -102,7 +122,6 @@ public class GameController : MonoBehaviour
 
     private void checkGameOver()
     {
-
         if (RoundNumber >= NumberOfRounds)
         {
 			_gameOver = true;
