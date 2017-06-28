@@ -27,7 +27,6 @@ public class MoveAnimation : IAnimation
 		_targetEnergy = unit.Energy;
 		_isStep = origin != destination;
 		moveSound = _avatar.moveSound;
-		Utils.Print (_isStep);
 	}
 
 	public bool ApplyAnimation(float time)

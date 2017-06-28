@@ -13,10 +13,12 @@ public class DeployAnimation : IAnimation
 	private float _elapsed;
 	
 	private UnitAvatar _unit;
-	
+	[FMODUnity.EventRef]
+	public string deploySound;
 	public DeployAnimation(UnitAvatar unit)
 	{
 		_unit = unit;
+		deploySound = _unit.inSound;
 	}
 	
 	public bool ApplyAnimation(float time)
@@ -35,6 +37,7 @@ public class DeployAnimation : IAnimation
 			
 			if (_elapsed >= 1)	// set up for second stage
 			{
+				FMODUnity.RuntimeManager.PlayOneShot (deploySound, new Vector3(0,0,0));
 				var smoke = Object.Instantiate(GuiComponents.GetDeployEffect());
 				smoke.transform.position = _unit.Position;
 				
