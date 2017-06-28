@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/goodscene.unity
     guid: cc4332df0a5cc4e089287ad60111223b
+  - enabled: 1
+    path: Assets/Scenes/goodscene 2.unity
+    guid: fb1f89a847e654cf5b0048abe860bf08
+  - enabled: 1
+    path: Assets/Scenes/goodscene 3.unity
+    guid: 305f3bc591c904e3191c3abfcc5f4e58
   - enabled: 0
     path: 
     guid: fe2b5bd1851d1534bbba3d947f9e1181
