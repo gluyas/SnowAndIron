@@ -39,7 +39,9 @@ public class CombatAnimation : SyncedAnimation<CombatAnimation, CombatAnimation>
 		if (Sync()) 
 		{
 			if (!_once) {
+				
 				FMODUnity.RuntimeManager.PlayOneShot (attackSound, new Vector3 (0, 0, 0));
+
 				_once = true;
 			}
 

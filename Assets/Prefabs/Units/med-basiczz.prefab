@@ -685,6 +685,7 @@ MonoBehaviour:
   MaxHealth: 4
   MaxEnergy: 3
   inSound: event:/MediumDeploy
+  moveSound: event:/MediumMove
   Ai: {fileID: 11400000, guid: ee53000eb8caea6408a0e50dc603d908, type: 2}
   MoveSpeed: 5
   TurnSpeed: 180

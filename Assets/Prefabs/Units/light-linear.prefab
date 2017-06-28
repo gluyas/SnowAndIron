@@ -2366,6 +2366,7 @@ MonoBehaviour:
   MaxHealth: 1
   MaxEnergy: 5
   inSound: event:/ScoutDeploy
+  moveSound: event:/ScoutMove
   Ai: {fileID: 11400000, guid: c963efcafb4277d4795097aa0c15dbb1, type: 2}
   MoveSpeed: 6
   TurnSpeed: 220
