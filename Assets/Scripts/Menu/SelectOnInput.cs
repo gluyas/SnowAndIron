@@ -6,8 +6,6 @@ public class SelectOnInput : MonoBehaviour {
 
 	public EventSystem eventSystem;
 	public GameObject selectedObject;
-
-
 	private bool buttonSelected;
 
 	// Use this for initialization
@@ -21,9 +19,10 @@ public class SelectOnInput : MonoBehaviour {
 		SelectButton ();
 	}
 	void SelectButton(){
+		//eventSystem.GetComponent<FMODUnity.StudioEventEmitter>().Play();
 			if (Input.GetAxisRaw ("Vertical") != 0 && buttonSelected == false) 
 			{
-	
+
 			eventSystem.SetSelectedGameObject(selectedObject);
 			buttonSelected = true;
 			}
