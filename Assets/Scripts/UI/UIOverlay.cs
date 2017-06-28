@@ -22,18 +22,19 @@ public class UIOverlay : MonoBehaviour {
     private string p1kill;
     private string p2kill;
 
-	public int RoundNumber;
+	private int totalRounds;
 	public int RoundSeconds;
 	public Image RoundBar;
 	public Image TimerBar;
 
-	private int round;	//current round
+	private int currentRound;	//current round
 	private float sec;	//current sec
 
 
     // Use this for initialization
     void Start () {
 		sec = 0.01f;
+		totalRounds = gameController.NumberOfRounds;
 	}
 	
 	// Update is called once per frame
@@ -59,11 +60,12 @@ public class UIOverlay : MonoBehaviour {
 
 		Round ();
 		RoundTimer ();
+
     }
 
 	void Round(){
-		round = gameController.RoundNumber;
-		RoundBar.fillAmount = (float)round / RoundNumber;
+		currentRound = gameController.RoundNumber;
+		RoundBar.fillAmount = (float)(currentRound) / totalRounds;
 	}
 
 	void RoundTimer(){
