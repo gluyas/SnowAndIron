@@ -3,8 +3,8 @@
 ## Controls
 | Action        | Player 1           | Player 2  |
 | :-: |:-:| :-:|
-|_Move_  |  `W` `A` `S` `D` (`Q` `E`) |  `I` `J` `K` `L` (`U` `O`)
 |_Select_ | `1` `2` `3`        |   `0` `9` `8`
-|_Rotate_|  `Z` `X` | `<` `>`
-|_Flip_|  `C` | `/`
-|_Place_ |  Press _Select_ again | Press _Select_ again |
+|_Move_  |  `W` `S` |  `I` `K`
+|_Rotate_|  `A` `D` | `J` `L`
+|_Reflect_|  `Q` | `O`
+|_Deploy_ |  `E` | `U` |
