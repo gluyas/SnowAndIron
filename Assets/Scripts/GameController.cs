@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Model;
 using Random = UnityEngine.Random;
@@ -31,6 +32,8 @@ public class GameController : MonoBehaviour
  
 	public int RoundNumber { get { return _worldController != null ? _worldController.RoundNumber : 0; } }
 	private WorldController _worldController;
+
+	private HashSet<UnitAvatar> _allAvatars = new HashSet<UnitAvatar>();
 	
 	private void Start()
 	{
@@ -51,8 +54,12 @@ public class GameController : MonoBehaviour
 		#if DEBUG
 		if (Input.GetKeyDown(KeyCode.BackQuote)) DoTurn();
 		#endif
-		ElapsedTime += Time.deltaTime;
-		if (ElapsedTime >= CurrentTurnTime) DoTurn();
+
+		if (_allAvatars.All(avatar => avatar.CurrentAnimation == null))	// stop timer when animations are happening
+		{
+			ElapsedTime += Time.deltaTime;
+			if (ElapsedTime >= CurrentTurnTime) DoTurn();
+		}
 	}
 	
 	public void DoTurn()
@@ -103,6 +110,8 @@ public class GameController : MonoBehaviour
 		{
 			avatar.SetUnit(unit);
 			_playerUnitPlaced[owner] = true;	// set player as placed a unit
+			
+			_allAvatars.Add(avatar);
 			
 			avatar.EnqueueAnimation(new DeployAnimation(avatar));
 			
