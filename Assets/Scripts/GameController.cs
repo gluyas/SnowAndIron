@@ -34,6 +34,7 @@ public class GameController : MonoBehaviour
 	private WorldController _worldController;
 
 	private HashSet<UnitAvatar> _allAvatars = new HashSet<UnitAvatar>();
+	private bool AnimationsComplete { get { return _allAvatars.All(avatar => avatar.CurrentAnimation == null); } }
 	
 	private void Start()
 	{
@@ -55,7 +56,9 @@ public class GameController : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.BackQuote)) DoTurn();
 		#endif
 
-		if (_allAvatars.All(avatar => avatar.CurrentAnimation == null))	// stop timer when animations are happening
+		checkGameOver();
+		
+		if (AnimationsComplete)	// stop timer when animations are happening
 		{
 			ElapsedTime += Time.deltaTime;
 			if (ElapsedTime >= CurrentTurnTime) DoTurn();
@@ -66,7 +69,6 @@ public class GameController : MonoBehaviour
 	{
 		_worldController.DoTurn();
 		FMODUnity.RuntimeManager.PlayOneShot (roundSound, new Vector3 (0, 0, 0));
-		checkGameOver();
 
 		if (!_gameOver)
 		{
@@ -134,7 +136,7 @@ public class GameController : MonoBehaviour
 
     private void checkGameOver()
     {
-        if (RoundNumber >= NumberOfRounds)
+        if (RoundNumber >= NumberOfRounds && AnimationsComplete)
         {
 			_gameOver = true;
             GameOverMenu.SetActive(true);
