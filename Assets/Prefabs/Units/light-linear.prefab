@@ -2364,10 +2364,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b573f884c323fa844be5f5283002b637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 1
-  MaxEnergy: 1
+  MaxHealth: 2
+  MaxEnergy: 3
   Attack: 1
-  Speed: 3
+  Speed: 2
   Ai: {fileID: 11400000, guid: c963efcafb4277d4795097aa0c15dbb1, type: 2}
   MoveSpeed: 6
   TurnSpeed: 220
