@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Model;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
-{	
+{
+	public readonly UnityEvent OnRoundTimeOut = new UnityEvent();
+	
 	public WorldGenerator WorldGenerator;
     public GameObject GameOverMenu;
 	public World World { get { return WorldGenerator.World; }}
@@ -61,7 +64,12 @@ public class GameController : MonoBehaviour
 		if (AnimationsComplete)	// stop timer when animations are happening
 		{
 			ElapsedTime += Time.deltaTime;
-			if (ElapsedTime >= CurrentTurnTime) DoTurn();
+			if (ElapsedTime >= CurrentTurnTime)
+			{
+				var round = RoundNumber;
+				OnRoundTimeOut.Invoke();
+				if (round == RoundNumber) DoTurn();	// if invoking the event did not trigger an end of round
+			}
 		}
 	}
 	

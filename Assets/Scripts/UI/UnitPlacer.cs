@@ -72,6 +72,8 @@ public class UnitPlacer : MonoBehaviour {
 		_previewTile.Paint(_c);		
 		selectedTile = 0;
 		maxTiles = 0;
+		
+		GameController.OnRoundTimeOut.AddListener(PlaceUnit);	// attempt to place unit at end of round
 	}
 
 
