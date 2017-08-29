@@ -8,6 +8,8 @@ namespace Model
 		public readonly Unit Unit2;
 		private static readonly Comparer<Combat> PriorityComparerInstance = new CombatPriorityComparer();
 
+		
+		
 		public Combat(Unit unit1, Unit unit2)
 		{
 			Unit1 = unit1;
