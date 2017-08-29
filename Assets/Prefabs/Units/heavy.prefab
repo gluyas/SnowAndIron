@@ -284,15 +284,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 6
-  MaxEnergy: 4
-  inSound: event:/HeavyDeploy
-  moveSound: event:/HeavyMove
+  MaxEnergy: 2
+  Attack: 2
+  Speed: 2
   Ai: {fileID: 11400000, guid: ee53000eb8caea6408a0e50dc603d908, type: 2}
   MoveSpeed: 5
   TurnSpeed: 180
   PaintComponents:
   - {fileID: 23086279376578544}
   - {fileID: 23555971594516080}
+  inSound: event:/HeavyDeploy
+  moveSound: event:/HeavyMove
 --- !u!136 &136840076315123858
 CapsuleCollider:
   m_ObjectHideFlags: 1

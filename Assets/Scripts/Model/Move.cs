@@ -29,14 +29,14 @@ namespace Model
 		/// </summary>
 		public readonly RelativeDirection Direction;
 
-		public readonly int EnergyCost;
+		public readonly int Cost;
 
-		private Move(TurnPlan owner, RelativeDirection direction, TileVector destination, int energyCost)
+		private Move(TurnPlan owner, RelativeDirection direction, TileVector destination, int cost)
 		{
 			Owner = owner;
 			Direction = direction;
 			Destination = destination;
-			EnergyCost = energyCost;
+			Cost = cost;
 		}
 
 		public void Accept()
@@ -59,7 +59,7 @@ namespace Model
 		public static Move Step(TurnPlan owner, RelativeDirection direction)
 		{
 			var destination = owner.Unit.Position + owner.Unit.Turn(direction);
-			return new Move(owner, direction, destination, 2);
+			return new Move(owner, direction, destination, 1);
 		}
 
 		/// <summary>
@@ -70,8 +70,8 @@ namespace Model
 		/// <returns></returns>
 		public static Move Turn(TurnPlan owner, RelativeDirection direction)
 		{
-			var cost = direction == RelativeDirection.Forward ? 0 : 1;
-			return new Move(owner, direction, owner.Unit.Position, cost);
+			//var cost = direction == RelativeDirection.Forward ? 0 : 1;
+			return new Move(owner, direction, owner.Unit.Position, 0);
 		}
 
 		/// <summary>

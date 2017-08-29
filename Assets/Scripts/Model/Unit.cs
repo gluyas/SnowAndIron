@@ -1,11 +1,12 @@
 ﻿using System;
+using UnityEngine.Events;
 
 namespace Model
 {
 	public sealed class Unit
-	{
+	{	
 		public delegate TurnPlan AiMoveMethod(Unit unit, World world);
-
+		
 		public const int UnitBadMovesTimeout = 5;
 
 		// Accessors
@@ -24,6 +25,11 @@ namespace Model
 
 		public readonly int MaxEnergy;
 		public int Energy { get; private set; }
+
+		public readonly int Speed;
+		public readonly int Attack;
+		
+		public int RemainingSteps { get; private set; }
 
 		// AI Hooks
 		private readonly AiMoveMethod _moveMethod;
@@ -49,6 +55,9 @@ namespace Model
 
 			MaxEnergy = Avatar.MaxEnergy;
 			Energy = MaxEnergy;
+
+			Speed = Avatar.Speed;
+			Attack = Avatar.Attack;
 
 			Mirrored = mirrored;
 		}
@@ -98,7 +107,7 @@ namespace Model
 		
 		public bool CanMove()
 		{
-			return Energy > 0;
+			return Energy > 0 || RemainingSteps > 0;
 		}
 
 		public void Reset()
@@ -116,10 +125,18 @@ namespace Model
 			Facing = Turn(move.Direction);
 			Position = move.Destination;
 
-			UnityEngine.Debug.LogFormat ("{0} -> {1}", startPos, Position);
-			Energy -= move.EnergyCost;
+			//UnityEngine.Debug.LogFormat ("{0} -> {1}", startPos, Position);
+			if (move.Cost > 0)
+			{
+				if (RemainingSteps <= 0)
+				{
+					RemainingSteps = Speed;
+					Energy -= 1;
+				}
+				RemainingSteps -= move.Cost;
+			}
 			
-			Avatar.EnqueueAnimation(new MoveAnimation(this, startPos, Position, Facing, move.EnergyCost));
+			Avatar.EnqueueAnimation(new MoveAnimation(this, startPos, Position, Facing, move.Cost));
 		}
 
 		public void ApplyCombat(Combat combat)
@@ -133,7 +150,10 @@ namespace Model
 			var combatDirection = Position.GetApproximateDirectionTo(other.Position);
 			if (!combatDirection.HasValue) throw new Exception();	// could not face other unit - probably same pos
 			
-			if (this.Energy <= 0) {// skip combat
+			// lose all remaining steps - needs playtesting
+			RemainingSteps = 0;
+			
+			if (this.Energy <= 0) {	// skip combat
 				Avatar.EnqueueAnimation(new CombatAnimation(this, other, 0));
 				return;	
 			}
@@ -141,9 +161,9 @@ namespace Model
 			Move.Turn(_currentMove, Cross(combatDirection.Value)).Accept();	// bit gross, but should be fine
 			
 			// do combat - deal damage to other unit, lose energy
-			var damage = Math.Min(this.Energy, other.Health); 	// TODO: implement buff mechanics here. 
+			var damage = Attack; 			// TODO: implement buff mechanics here. 
 			other.Health -= damage;			// NB: care should be taken when using this.Health or other.Energy in
-			this.Energy -= damage;			// combat logic, as one side of combat will be resolved before the other.
+			this.Energy -= 1;				// combat logic, as one side of combat will be resolved before the other.
 			
 			Avatar.EnqueueAnimation(new CombatAnimation(this, other, damage));
 		}

@@ -9,10 +9,9 @@ public class UnitAvatar : MonoBehaviour
 	// Behavioural and stat variables
 	public int MaxHealth;
 	public int MaxEnergy;
-	[FMODUnity.EventRef]
-	public string inSound;
-	[FMODUnity.EventRef]
-	public string moveSound;
+
+	public int Attack;
+	public int Speed;
 
 	public UnitAi Ai;
 	
@@ -24,28 +23,11 @@ public class UnitAvatar : MonoBehaviour
 	public Animator Animator { get; protected set; }
 	public MeshRenderer[] PaintComponents;
 	
-	private MeshRenderer[] _allRenderers;
-	private MeshRenderer[] AllRenderers
-	{
-		get
-		{
-			if (_allRenderers == null)
-			{
-				_allRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
-				foreach (var r in _allRenderers) {
-					foreach (var m in r.materials) {
-						if (m.HasProperty ("_Color"))
-						{
-							_initialColors.Add(m, m.color);
-						}
-					}
-				}
-			}
-			return _allRenderers;
-		}
-	}
-	
-	private Dictionary<Material, Color> _initialColors = new Dictionary<Material, Color>();
+	// Sound
+	[FMODUnity.EventRef]
+	public string inSound;
+	[FMODUnity.EventRef]
+	public string moveSound;
 
 	// Movement state trackers
 	private Queue<IAnimation> _animQueue = new Queue<IAnimation>();
@@ -91,6 +73,14 @@ public class UnitAvatar : MonoBehaviour
 	private void Update()
 	{
 		if (_unit == null) return;
+		
+		if (_animQueue.Count > 0)
+		{
+			if (_animQueue.Peek().ApplyAnimation(Time.deltaTime))
+			{
+				_animQueue.Dequeue();
+			}
+		}
 		
 		_hpBar.gameObject.transform.position = new 
 			Vector3 (this.Position.x, this.Position.y+0.6f, this.Position.z-1f);
@@ -145,6 +135,43 @@ public class UnitAvatar : MonoBehaviour
 		_epBar.SetPercent (epPercent);
 	}
 
+	public void Kill()
+	{
+		_animQueue.Enqueue(new DestroyAnimation(this));
+	}
+
+	public void Destroy(){
+		Destroy(gameObject);
+		Destroy (_hpBar.gameObject);
+		Destroy (_epBar.gameObject);
+	}
+	
+	// messy painting bs
+		
+	private MeshRenderer[] _allRenderers;
+	private MeshRenderer[] AllRenderers
+	{
+		get
+		{
+			if (_allRenderers == null)
+			{
+				_allRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+				foreach (var r in _allRenderers) {
+					foreach (var m in r.materials) {
+						if (m.HasProperty ("_Color"))
+						{
+							_initialColors.Add(m, m.color);
+						}
+					}
+				}
+			}
+			return _allRenderers;
+		}
+	}
+	
+	private Dictionary<Material, Color> _initialColors = new Dictionary<Material, Color>();
+
+	
 	public void Paint(Color color)
 	{
 		foreach (var r in AllRenderers) {
@@ -178,28 +205,6 @@ public class UnitAvatar : MonoBehaviour
 				{
 					m.color = _unit.Owner.Color;
 				}
-			}
-		}
-	}
-
-	public void Kill()
-	{
-		_animQueue.Enqueue(new DestroyAnimation(this));
-	}
-
-	public void Destroy(){
-		Destroy(gameObject);
-		Destroy (_hpBar.gameObject);
-		Destroy (_epBar.gameObject);
-	}
-
-	void FixedUpdate()
-	{
-		if (_animQueue.Count > 0)
-		{
-			if (_animQueue.Peek().ApplyAnimation(Time.deltaTime))
-			{
-				_animQueue.Dequeue();
 			}
 		}
 	}

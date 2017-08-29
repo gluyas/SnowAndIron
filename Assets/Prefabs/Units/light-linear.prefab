@@ -2365,9 +2365,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 1
-  MaxEnergy: 5
-  inSound: event:/ScoutDeploy
-  moveSound: event:/ScoutMove
+  MaxEnergy: 1
+  Attack: 1
+  Speed: 3
   Ai: {fileID: 11400000, guid: c963efcafb4277d4795097aa0c15dbb1, type: 2}
   MoveSpeed: 6
   TurnSpeed: 220
@@ -2376,6 +2376,8 @@ MonoBehaviour:
   - {fileID: 23021422627737816}
   - {fileID: 23714112437986532}
   - {fileID: 23666738006036570}
+  inSound: event:/ScoutDeploy
+  moveSound: event:/ScoutMove
 --- !u!136 &136814214473604574
 CapsuleCollider:
   m_ObjectHideFlags: 1
